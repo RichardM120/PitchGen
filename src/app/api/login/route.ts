@@ -18,7 +18,7 @@ import { getPitch } from "@/lib/store";
 // deck's own passcode. Highest matching level wins.
 export async function POST(req: NextRequest) {
   const form = await req.formData();
-  const password = String(form.get("password") ?? "");
+  const password = String(form.get("password") ?? "").trim();
   const email = String(form.get("email") ?? "").trim().slice(0, 120);
   const deck = String(form.get("deck") ?? "").replace(/[^a-z0-9-]/g, "");
   const next = String(form.get("next") ?? "/");
@@ -52,7 +52,11 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  if (!cookie) return fail();
+  if (!cookie) {
+    console.warn(`login failed: len=${password.length} deck=${deck || "-"} adminSet=${Boolean(admin)} viewerSet=${Boolean(viewer)}`);
+    return fail();
+  }
+  console.log(`login ok: ${cookie.name} -> ${location}`);
 
   const res = new NextResponse(null, { status: 303, headers: { Location: location } });
   res.cookies.set(cookie.name, cookie.value, cookieOpts());
