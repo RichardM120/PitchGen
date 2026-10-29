@@ -1,20 +1,48 @@
 @import "tailwindcss";
 
-/* Cinema-dark palette. Deck-specific accents come from each pitch's
-   color_palette and are set inline as CSS variables on the deck root. */
+/* PitchGen design system, v1. Blue teal on deep ink.
+   Source of truth: design-system/tokens.json. Keep the two in sync. */
 :root {
-  --ink: #0b0d0e;
-  --ink-2: #14181a;
-  --ink-3: #1e2427;
-  --paper: #ece7dd;
-  --mute: #8f958f;
-  --line: rgba(236, 231, 221, 0.12);
-  --accent: #c9b79c;
+  /* Teal scale */
+  --teal-950: #04171c;
+  --teal-900: #072a32;
+  --teal-800: #0b3c47;
+  --teal-700: #0f5563;
+  --teal-600: #13707f;
+  --teal-500: #178e9e;
+  --teal-400: #2fb3c2;
+  --teal-300: #6fd0da;
+  --teal-200: #b4e6eb;
+  --teal-100: #e3f5f7;
+
+  /* Semantic */
+  --ink: var(--teal-950);
+  --ink-2: #082129;
+  --ink-3: #0d303a;
+  --paper: #eef6f7;
+  --mute: #8fa9af;
+  --line: rgba(238, 246, 247, 0.12);
+  --accent: var(--teal-400);
+  --accent-strong: var(--teal-500);
+  --ok: #4cbf8a;
+  --warn: #e0a458;
+  --danger: #e2695e;
+
   --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-body: "Inter Variable", system-ui, sans-serif;
+  --font-body: "Montserrat Variable", system-ui, sans-serif;
 }
 
 @theme inline {
+  --color-teal-950: var(--teal-950);
+  --color-teal-900: var(--teal-900);
+  --color-teal-800: var(--teal-800);
+  --color-teal-700: var(--teal-700);
+  --color-teal-600: var(--teal-600);
+  --color-teal-500: var(--teal-500);
+  --color-teal-400: var(--teal-400);
+  --color-teal-300: var(--teal-300);
+  --color-teal-200: var(--teal-200);
+  --color-teal-100: var(--teal-100);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-ink-3: var(--ink-3);
@@ -22,9 +50,13 @@
   --color-mute: var(--mute);
   --color-line: var(--line);
   --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
   --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Inter Variable", system-ui, sans-serif;
-  --aspect-scope: 2.39 / 1;
+  --font-sans: "Montserrat Variable", system-ui, sans-serif;
+  --radius-pg: 10px;
 }
 
 html {
@@ -35,11 +67,13 @@ html {
 body {
   background: var(--ink);
   color: var(--paper);
+  font-size: 15px;
 }
 
 .eyebrow {
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--mute);
 }
@@ -47,6 +81,89 @@ body {
 .grain {
   background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 3px 3px;
+}
+
+.glow {
+  background:
+    radial-gradient(60% 50% at 20% 0%, rgba(47, 179, 194, 0.18), transparent 60%),
+    radial-gradient(40% 40% at 90% 100%, rgba(23, 142, 158, 0.14), transparent 60%);
+}
+
+/* Form controls */
+.field {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 120ms;
+}
+.field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(47, 179, 194, 0.18);
+}
+.field::placeholder {
+  color: rgba(143, 169, 175, 0.6);
+}
+textarea.field {
+  min-height: 5.5rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+.label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--mute);
+  margin-bottom: 0.3rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 120ms, color 120ms, border-color 120ms;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--teal-950);
+}
+.btn-primary:hover {
+  background: var(--teal-300);
+}
+.btn-ghost {
+  border: 1px solid var(--line);
+  color: var(--paper);
+}
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.btn-danger {
+  border: 1px solid rgba(226, 105, 94, 0.4);
+  color: var(--danger);
+}
+.btn-danger:hover {
+  background: rgba(226, 105, 94, 0.12);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.card {
+  border: 1px solid var(--line);
+  background: var(--ink-2);
+  border-radius: var(--radius-pg);
 }
 
 @media print {

@@ -1,9 +1,12 @@
 import type { NextConfig } from "next";
 
-// PitchGen is served at cwcasting.com/pitchgen via a rewrite from the
-// cwcasting Vercel project, so every route lives under this base path.
+// Mount path. Piloting at cwcasting.com/pitchgen via a rewrite from the
+// cwcasting project; set NEXT_PUBLIC_BASE_PATH="" once PitchGen has its own domain.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/pitchgen";
+
 const nextConfig: NextConfig = {
-  basePath: "/pitchgen",
+  basePath: basePath || undefined,
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
   turbopack: {
     rules: {
       "*.css": {

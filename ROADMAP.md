@@ -1,7 +1,7 @@
 # PitchGen Roadmap
 
 Live path: **cwcasting.com/pitchgen** (password protected, noindex).
-Product: interactive, watermarked HTML pitch portals for UK drama, built by CW Casting.
+Product: interactive, watermarked HTML pitch portals for UK drama. PitchGen is its own brand, piloted under the CW Casting domain until it has one of its own.
 
 ## How it is built
 
@@ -9,10 +9,10 @@ Product: interactive, watermarked HTML pitch portals for UK drama, built by CW C
 |---|---|---|---|
 | Frontend | Next.js 16 App Router, Tailwind 4, basePath `/pitchgen` | Producer Studio editor | Per-deck branding |
 | Hosting | Own Vercel project, rewritten from `cwcasting` project | same | same |
-| Data | JSON files in `data/pitches/` validated by Zod | Neon Postgres (same as OpenCasting) | multi-tenant |
-| Access | One shared passcode, signed cookie, viewer email watermark | Per-deck passcodes | Per-recipient links, expiry |
-| AI intake | Manual: run `prompts/master-extraction-prompt.md` in Claude | `/api/generate`: Whisper or Gemini for audio, Claude for prose | Concept stills (FLUX/Imagen) |
-| Video | `<video>` from any URL | Mux upload + HLS | Play-time telemetry |
+| Data | Vercel Blob JSON, Zod validated (bundled sample as fallback) | Neon Postgres when telemetry lands | multi-tenant |
+| Access | Studio, shared and per-deck passcodes; signed cookies; viewer email watermark | Per-recipient links, expiry | SSO for studios |
+| AI intake | `/api/generate`: Claude for prose and PDFs, Whisper for audio | Section-level regenerate | Concept stills |
+| Video | Upload to Blob or paste a link | Mux upload + HLS | Play-time telemetry |
 | Analytics | none | Vercel Analytics | Slide dwell + tape plays to DB |
 
 ## Phase 1: V1 private portal (this commit)
@@ -29,12 +29,19 @@ Product: interactive, watermarked HTML pitch portals for UK drama, built by CW C
 - [x] Rewrite in cwcasting repo `vercel.json` (see below)
 - [ ] Add first real project (e.g. Sadie on the Farm) as `data/pitches/<slug>.json`
 
-## Phase 2: AI intake and editor (weeks 2 to 3)
+## Phase 2: AI intake and editor (shipped 29 Oct 2026)
 
-- [ ] `/api/generate`: upload voice note / PDF treatment, return validated JSON
-- [ ] Producer Studio: form on left, live deck on right, save to Neon
-- [ ] Media uploads to Vercel Blob (stills, headshots) and Mux (tapes)
-- [ ] Per-deck passcodes and recipient name
+- [x] PitchGen design system: blue teal tokens, logo, type, controls (`/design-system`, `design-system/tokens.json`)
+- [x] Pitch store on Vercel Blob (`src/lib/store.ts`); swap for Neon later without touching pages
+- [x] Producer Studio: slate, create blank, duplicate, delete
+- [x] Editor with tabs, live preview, Cmd+S save, JSON power tab
+- [x] Media uploads to Vercel Blob: images to 25MB, video to 500MB, or paste a link
+- [x] `/api/generate`: notes, PDF treatment or voice note to a validated deck (needs ANTHROPIC_API_KEY; audio needs OPENAI_API_KEY)
+- [x] Three access levels: studio passcode, shared viewer passcode, per-deck passcode
+- [x] Recipient name per deck for the watermark
+- [x] Mount path in one env var (`NEXT_PUBLIC_BASE_PATH`) ready for PitchGen's own domain
+- [ ] Set ANTHROPIC_API_KEY in Vercel to switch on generation
+- [ ] Mux for HLS streaming and play telemetry (Blob video is progressive download for now)
 
 ## Phase 3: Telemetry and pilots (weeks 3 to 4)
 

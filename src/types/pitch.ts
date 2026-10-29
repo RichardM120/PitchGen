@@ -10,9 +10,13 @@ export const PitchDeckSchema = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/),
   status: z.enum(["draft", "in_review", "sent"]).default("draft"),
   security: z.object({
-    is_password_protected: z.boolean(),
-    watermark_recipient: z.string().optional(),
+    is_password_protected: z.boolean().default(true),
+    // Optional deck-specific passcode for a commissioner. The shared studio
+    // passcode always works too.
+    passcode: z.string().optional().default(""),
+    watermark_recipient: z.string().optional().default(""),
   }),
+  updated_at: z.string().optional(),
   hero: z.object({
     title: z.string(),
     format: z.string(),

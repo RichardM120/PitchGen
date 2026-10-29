@@ -1,20 +1,31 @@
-// Shared-password gate. The cookie holds a SHA-256 of password + secret, so
-// rotating either env var signs everyone out. Web Crypto only, so it runs in
-// the proxy as well as in route handlers.
+// Three cookies, all HMAC-signed with PITCHGEN_SECRET so the proxy can verify
+// them without a database. Rotating the secret signs everyone out.
+//   pg_viewer        shared passcode (PITCHGEN_PASSWORD): all decks + dashboard
+//   pg_admin         studio passcode (PITCHGEN_ADMIN_PASSWORD): everything + /studio
+//   pg_deck_<slug>   a deck's own passcode: that deck only
+// Web Crypto only, so this runs in the proxy as well as route handlers.
 
-export const AUTH_COOKIE = "pg_session";
+import { BASE } from "./base";
+
 export const VIEWER_COOKIE = "pg_viewer";
+export const ADMIN_COOKIE = "pg_admin";
+export const EMAIL_COOKIE = "pg_email";
+export const deckCookie = (slug: string) => `pg_deck_${slug.replace(/[^a-z0-9-]/g, "")}`;
 
-export async function expectedToken(): Promise<string | null> {
-  const password = process.env.PITCHGEN_PASSWORD;
-  const secret = process.env.PITCHGEN_SECRET ?? "pitchgen";
-  if (!password) return null;
-  const bytes = new TextEncoder().encode(`${password}:${secret}`);
-  const hash = await crypto.subtle.digest("SHA-256", bytes);
-  return Array.from(new Uint8Array(hash))
+const enc = new TextEncoder();
+
+async function hmac(message: string): Promise<string> {
+  const secret = process.env.PITCHGEN_SECRET ?? "dev-secret";
+  const key = await crypto.subtle.importKey("raw", enc.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(message));
+  return Array.from(new Uint8Array(sig))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
 }
+
+export const viewerToken = () => hmac("viewer");
+export const adminToken = () => hmac("admin");
+export const deckToken = (slug: string) => hmac(`deck:${slug}`);
 
 export function safeEqual(a: string, b: string): boolean {
   if (a.length !== b.length) return false;
@@ -23,8 +34,28 @@ export function safeEqual(a: string, b: string): boolean {
   return diff === 0;
 }
 
-// Relative redirects keep the browser on cwcasting.com when PitchGen is
-// served through the cwcasting rewrite rather than on its own vercel.app host.
-export function relativeRedirect(location: string, status = 303): Response {
-  return new Response(null, { status, headers: { Location: location } });
+type CookieReader = { get(name: string): { value: string } | undefined };
+
+export async function isAdmin(c: CookieReader): Promise<boolean> {
+  const v = c.get(ADMIN_COOKIE)?.value ?? "";
+  return v !== "" && safeEqual(v, await adminToken());
 }
+
+export async function isViewer(c: CookieReader): Promise<boolean> {
+  const v = c.get(VIEWER_COOKIE)?.value ?? "";
+  return (v !== "" && safeEqual(v, await viewerToken())) || (await isAdmin(c));
+}
+
+export async function canSeeDeck(c: CookieReader, slug: string): Promise<boolean> {
+  if (await isViewer(c)) return true;
+  const v = c.get(deckCookie(slug))?.value ?? "";
+  return v !== "" && safeEqual(v, await deckToken(slug));
+}
+
+export const cookieOpts = (maxAge = 60 * 60 * 24 * 7) => ({
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax" as const,
+  path: BASE || "/",
+  maxAge,
+});

@@ -32,3 +32,11 @@ src/components/ui/     media, video modal, watermark
 ```
 
 See [ROADMAP.md](ROADMAP.md) for the build plan.
+
+## Producer Studio (Phase 2)
+
+- `/studio` with the studio passcode: create, duplicate, delete and edit pitches.
+- `/studio/new`: paste notes or attach a PDF or voice note; the deck is drafted and saved.
+- Editor: tabs on the left, live deck on the right, Cmd+S to save. Images and video upload straight to Vercel Blob.
+- Access tab: set a deck-only passcode and a recipient name for the watermark.
+- `/design-system`: tokens, logo, type and controls.
