@@ -24,9 +24,9 @@ Product: interactive, watermarked HTML pitch portals for UK drama, built by CW C
 - [x] Password gate (proxy.ts) + viewer-email watermark on every page
 - [x] Print-to-PDF stylesheet (A4 landscape)
 - [x] noindex headers and metadata
-- [ ] GitHub repo `RichardM120/pitchgen` and push
-- [ ] Vercel project `pitchgen`, env vars `PITCHGEN_PASSWORD`, `PITCHGEN_SECRET`
-- [ ] Rewrite in cwcasting repo `vercel.json` (see below)
+- [x] GitHub repo `RichardM120/pitchgen` and push
+- [x] Vercel project `pitchgen`, env vars `PITCHGEN_PASSWORD`, `PITCHGEN_SECRET`
+- [x] Rewrite in cwcasting repo `vercel.json` (see below)
 - [ ] Add first real project (e.g. Sadie on the Farm) as `data/pitches/<slug>.json`
 
 ## Phase 2: AI intake and editor (weeks 2 to 3)
@@ -55,7 +55,7 @@ In the cwcasting repo, add to `vercel.json`:
 }
 ```
 
-Set the `pitchgen` project's Deployment Protection to off for production (the app has its own gate), otherwise the rewrite gets Vercel's SSO wall.
+Done: the `pitchgen` project's Deployment Protection is off for production (the app has its own gate), otherwise the rewrite gets Vercel's SSO wall.
 
 ## Corrections to the blueprint
 
