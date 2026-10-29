@@ -40,6 +40,8 @@ export async function POST(req: NextRequest) {
 
   if (admin && safeEqual(password, admin)) {
     cookie = { name: ADMIN_COOKIE, value: await adminToken() };
+    // The builder lands in the Studio unless they were heading for a specific page.
+    if (safeNext === "/") location = href("/studio");
   } else if (viewer && safeEqual(password, viewer)) {
     cookie = { name: VIEWER_COOKIE, value: await viewerToken() };
     if (safeNext.startsWith("/studio")) location = href("/");
