@@ -29,7 +29,7 @@ export default function DesignSystemPage() {
             <PitchGenWordmark size={28} />
           </div>
         </div>
-        <p className="mt-4 text-xs text-mute">{tokens.logo.mark}. Minimum size 16px. Clear space equals the tile radius.</p>
+        <p className="mt-4 text-xs text-mute">{tokens.logo.mark}. Minimum size 16px. Clear space equals the tile radius. {tokens.logo.alternates}</p>
       </Section>
 
       <Section title="Teal scale">

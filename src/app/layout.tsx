@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: { default: "PitchGen", template: "%s | PitchGen" },
   description: "Private, commission-ready pitch portals for TV and film.",
   robots: { index: false, follow: false },
+  icons: { icon: "/pitchgen/icon.svg", apple: "/pitchgen/apple-icon.png" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
