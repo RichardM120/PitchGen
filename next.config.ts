@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    // The bare host has nothing on it; send people to the app.
+    return basePath ? [{ source: "/", destination: basePath, basePath: false, permanent: false }] : [];
+  },
   async headers() {
     return [
       {
