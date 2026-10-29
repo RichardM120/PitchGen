@@ -20,7 +20,7 @@ export default async function Dashboard() {
             {decks.length} {decks.length === 1 ? "pitch" : "pitches"} on the slate
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {admin && (
             <Link href="/studio" className="btn btn-primary">
               <Plus size={14} /> Studio

@@ -20,14 +20,14 @@ export default async function StudioHome() {
           <p className="eyebrow">Producer Studio</p>
           <h1 className="mt-1 font-display text-4xl italic">The slate</h1>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
           <form action={createPitchAction} className="flex items-center gap-2">
-            <input name="title" placeholder="New pitch title" className="field w-56" required />
-            <button className="btn btn-ghost" disabled={!canSave}>
+            <input name="title" placeholder="New pitch title" className="field w-full sm:w-56" required />
+            <button className="btn btn-ghost shrink-0" disabled={!canSave}>
               Create blank
             </button>
           </form>
-          <Link href="/studio/new" className="btn btn-primary">
+          <Link href="/studio/new" className="btn btn-primary justify-center">
             <Sparkles size={14} /> Generate from notes
           </Link>
         </div>

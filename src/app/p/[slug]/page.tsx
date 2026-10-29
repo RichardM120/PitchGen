@@ -53,7 +53,7 @@ export default async function DeckPage({ params }: Params) {
             </Link>
           )}
           <PrintButton>
-            <Printer size={14} /> PDF
+            <Printer size={14} /> <span className="hidden sm:inline">PDF</span>
           </PrintButton>
         </span>
       </nav>

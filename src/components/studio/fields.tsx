@@ -146,9 +146,9 @@ export function MediaField({ label, value, onChange, kind = "image", hint }: { l
       <label className="label" htmlFor={id}>
         {label}
       </label>
-      <div className="flex items-start gap-3">
+      <div className="flex flex-col items-start gap-3 sm:flex-row">
         {kind === "image" && value && <img src={value} alt="" className="h-14 w-20 shrink-0 rounded object-cover" />}
-        <div className="flex-1">
+        <div className="w-full flex-1">
           <div className="flex gap-2">
             <input id={id} className="field" value={value} placeholder={kind === "image" ? "https://... or upload" : "https://... (Vimeo, Dropbox) or upload"} onChange={(e) => onChange(e.target.value)} />
             <label className="btn btn-ghost cursor-pointer py-1.5">

@@ -68,18 +68,18 @@ export function Editor({ initial }: { initial: PitchDeckData }) {
   const f = deck.production.financials;
 
   return (
-    <div className="flex h-[calc(100vh-49px)] flex-col">
-      <div className="flex items-center gap-4 border-b border-line bg-ink-2 px-5 py-2.5 text-sm">
-        <span className="font-display text-xl">{h.title || "Untitled"}</span>
-        <span className="text-xs text-mute">/p/{deck.slug}</span>
-        <span className="ml-auto flex items-center gap-3 text-xs">
-          {msg && <span className={msg.ok ? "text-ok" : "text-danger"}>{msg.text}</span>}
-          {dirty && !msg && <span className="text-warn">Unsaved changes</span>}
-          <button type="button" className="btn btn-ghost py-1.5 lg:inline-flex" onClick={() => setShowPreview((s) => !s)}>
+    <div className="flex flex-col lg:h-[calc(100vh-49px)]">
+      <div className="sticky top-[49px] z-20 flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-line bg-ink-2 px-4 py-2.5 text-sm md:px-5">
+        <span className="min-w-0 flex-1 truncate font-display text-xl">{h.title || "Untitled"}</span>
+        <span className="hidden text-xs text-mute md:inline">/p/{deck.slug}</span>
+        <span className="ml-auto flex items-center gap-2 text-xs md:gap-3">
+          {msg && <span className={`hidden sm:inline ${msg.ok ? "text-ok" : "text-danger"}`}>{msg.text}</span>}
+          {dirty && !msg && <span className="hidden text-warn sm:inline">Unsaved changes</span>}
+          <button type="button" className="btn btn-ghost hidden py-1.5 lg:inline-flex" onClick={() => setShowPreview((s) => !s)}>
             {showPreview ? "Hide preview" : "Show preview"}
           </button>
           <Link href={`/p/${deck.slug}`} target="_blank" className="btn btn-ghost py-1.5">
-            <ExternalLink size={13} /> Open
+            <ExternalLink size={13} /> <span className="hidden sm:inline">Open</span>
           </Link>
           <button type="button" className="btn btn-primary py-1.5" onClick={save} disabled={saving || !dirty}>
             {saving ? <Loader2 size={13} className="animate-spin" /> : dirty ? <Save size={13} /> : <Check size={13} />}
@@ -88,9 +88,10 @@ export function Editor({ initial }: { initial: PitchDeckData }) {
         </span>
       </div>
 
+      {msg && !msg.ok && <p className="border-b border-danger/30 bg-danger/10 px-4 py-2 text-xs text-danger sm:hidden">{msg.text}</p>}
       <div className="flex min-h-0 flex-1">
-        <div className={`flex min-h-0 flex-col ${showPreview ? "w-full lg:w-[46%]" : "w-full"} border-r border-line`}>
-          <div className="flex gap-1 overflow-x-auto border-b border-line px-3 pt-2 text-xs">
+        <div className={`flex min-h-0 flex-col ${showPreview ? "w-full lg:w-[46%]" : "w-full"} lg:border-r lg:border-line`}>
+          <div className="sticky top-[97px] z-10 flex gap-1 overflow-x-auto border-b border-line bg-ink px-3 pt-2 text-xs lg:static">
             {TABS.map((t) => (
               <button
                 key={t}
@@ -103,7 +104,7 @@ export function Editor({ initial }: { initial: PitchDeckData }) {
             ))}
           </div>
 
-          <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-5">
+          <div className="min-h-0 flex-1 space-y-5 px-4 py-5 md:px-5 lg:overflow-y-auto">
             {tab === "Overview" && (
               <>
                 <Text label="Title" value={h.title} onChange={(v) => patch("hero", { ...h, title: v })} />
