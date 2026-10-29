@@ -28,8 +28,11 @@ export default function DesignSystemPage() {
           <div className="rounded-md bg-paper p-4 text-ink">
             <PitchGenWordmark size={28} />
           </div>
+          <div className="rounded-xl bg-ink p-2 text-paper ring-1 ring-line">
+            <PitchGenMark size={40} />
+          </div>
         </div>
-        <p className="mt-4 text-xs text-mute">{tokens.logo.mark}. Minimum size 16px. Clear space equals the tile radius. {tokens.logo.alternates}</p>
+        <p className="mt-4 text-xs text-mute">{tokens.logo.mark}. Paper on dark, ink on light. Minimum size 16px. {tokens.logo["app icon"]}.</p>
       </Section>
 
       <Section title="Teal scale">

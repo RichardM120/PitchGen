@@ -70,6 +70,7 @@ body {
   font-size: 15px;
 }
 
+@layer components {
 .eyebrow {
   font-size: 0.68rem;
   font-weight: 600;
@@ -164,6 +165,7 @@ textarea.field {
   border: 1px solid var(--line);
   background: var(--ink-2);
   border-radius: var(--radius-pg);
+}
 }
 
 @media print {
