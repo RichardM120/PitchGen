@@ -1,0 +1,76 @@
+{
+  "project_id": "pg-0001",
+  "slug": "the-saltings",
+  "status": "draft",
+  "security": {
+    "is_password_protected": true,
+    "watermark_recipient": "Prepared for Drama Commissioning"
+  },
+  "hero": {
+    "title": "The Saltings",
+    "format": "6 x 60' Returnable Coastal Crime Drama",
+    "genre": ["Crime", "Drama", "Coastal Noir"],
+    "comparables": "Broadchurch meets The Night Of",
+    "logline": "When a body surfaces in the oyster beds of a Kent harbour town, a disgraced harbourmaster must police the tide that once ruined her, knowing every family on the quay owes the sea a secret.",
+    "hero_image_url": "",
+    "sizzle_video_url": ""
+  },
+  "world_and_engine": {
+    "synopsis": "Morwen Hale lost her licence and her marriage the night a fishing boat went down under her watch. Twelve years on she runs the harbour office nobody else wants, until the low tide gives up a man everyone swore had emigrated. The town closes ranks. Morwen opens the books.",
+    "the_engine": "The tide is the procedural clock. Each episode turns on what the sea returns or takes between two low tides, while the harbour ledger, a century of debts, smuggling and favours, seeds a new case every season. Morwen cannot leave the water, and the water never stops delivering.",
+    "why_now": "Coastal towns are being priced out, flooded and remade in the same decade. The Saltings treats gentrification, climate and inherited guilt as crime-scene evidence rather than background.",
+    "color_palette": ["#0E1A1F", "#2F4A4F", "#7A8C84", "#C9B79C", "#E8E1D3"],
+    "mood_stills": [
+      { "url": "", "caption": "Low tide, first light. The body line drawn in silt.", "aspect_ratio": "2.39:1" },
+      { "url": "", "caption": "Harbour office at night, ledgers lit by sodium lamps.", "aspect_ratio": "2.39:1" },
+      { "url": "", "caption": "Weatherboard houses, sea fog, a town that watches back.", "aspect_ratio": "2.39:1" }
+    ]
+  },
+  "casting": [
+    {
+      "character_name": "Morwen Hale",
+      "age_range": "45 to 55",
+      "archetype": "The exile who stayed",
+      "character_bio": "Former harbourmaster, now clerk of the office she once ran. Knows every hull and every lie on the quay.",
+      "casting_notes": "Stillness over volume. A low, unhurried voice that makes silence an accusation. Needs physical ease on boats and the ability to hold a two-hander without blinking.",
+      "actor_wishlist": [
+        { "name": "Wishlist A (TBC)", "headshot_url": "", "credits_note": "Lead in returnable BBC drama; strong coastal register" },
+        { "name": "Wishlist B (TBC)", "headshot_url": "", "credits_note": "Stage-led, recent streamer breakout" }
+      ],
+      "audition_or_reel_url": ""
+    },
+    {
+      "character_name": "DS Kit Arden",
+      "age_range": "28 to 35",
+      "archetype": "The outsider with a mortgage to pay",
+      "character_bio": "Seconded from Medway, bought a flat on the front, and is fast learning that the town does not want her answers.",
+      "casting_notes": "Quick, bright, slightly too eager. Counterweight to Morwen's stillness. Chemistry read essential.",
+      "actor_wishlist": [
+        { "name": "Wishlist C (TBC)", "headshot_url": "", "credits_note": "Rising lead, recent Channel 4 single drama" }
+      ],
+      "audition_or_reel_url": ""
+    }
+  ],
+  "production": {
+    "locations": [
+      { "name": "Harbour and oyster beds", "region": "North Kent coast", "visual_rationale": "Working harbour with tidal flats gives the show its clock and its crime scenes.", "image_url": "" },
+      { "name": "Marshland and sea wall", "region": "Thames Estuary", "visual_rationale": "Flat, exposed horizons. Nowhere to hide, everything visible from a mile off.", "image_url": "" }
+    ],
+    "financials": {
+      "indicative_budget_band": "£1.6M to £2.0M per episode",
+      "uk_tax_relief_eligible": true,
+      "tax_relief_notes": "Qualifies as high-end TV (over £1M per broadcast hour). AVEC at 34% gross, c.25.5% net, on qualifying UK core expenditure.",
+      "co_pro_opportunities": ["Nordic broadcaster co-pro", "US cable or streamer second window"],
+      "existing_attachments_or_funding": "Development funded in-house. Casting director attached (CW Casting)."
+    }
+  },
+  "episodic_arc": [
+    { "episode_number": 1, "title": "Low Water", "hook": "A man declared emigrated is found in the oyster beds.", "synopsis": "Morwen spots what the police miss: the knots on the body are hers, from a boat she lost twelve years ago." },
+    { "episode_number": 2, "title": "The Ledger", "hook": "The harbour books have a missing year.", "synopsis": "Kit pushes for warrants; Morwen pushes for the one family that kept the old ledgers." },
+    { "episode_number": 3, "title": "Spring Tide", "hook": "A second body, and the tide is running higher than records allow.", "synopsis": "The case turns from murder to cover-up as the sea wall contract surfaces." }
+  ],
+  "team": [
+    { "name": "Catherine Willis", "role": "Casting Director", "company": "CW Casting", "bio": "Casting director attached to shape the ensemble and secure early chemistry reads.", "notable_credits": [], "headshot_url": "" },
+    { "name": "Richard Morland", "role": "Producer / Digital Lead", "company": "Sea Glass Digital", "bio": "Packaging and digital lead on the PitchGen portal.", "notable_credits": [], "headshot_url": "" }
+  ]
+}
