@@ -52,6 +52,13 @@ Product: interactive, watermarked HTML pitch portals for UK drama. PitchGen is i
 - [x] Four-step wizard: Start, Add material, Refine (editor with per-tab guidance and checklist), Preview and publish
 - [x] Publish flow: drafts are private; viewers only see published decks
 
+## Phase 2.2: Word upload, AI assist, layouts, public links (30 Oct 2026)
+
+- [x] Word (.docx) treatments read at Step 2, alongside PDF and voice notes
+- [x] AI assist on every editor tab: Fill the gaps, Tighten, Punchier, More atmospheric, Simpler, Expand, or a custom instruction; Undo
+- [x] Three layouts, chosen at Step 1 and switchable in Access: Cinematic, Editorial, One-pager
+- [x] Publish dialog: public link (no passcode) or passcode protected; Copy link
+
 ## Phase 3: Telemetry and pilots (weeks 3 to 4)
 
 - [ ] Log section views and tape plays per viewer

@@ -39,6 +39,8 @@ export async function createPitchAction(formData: FormData): Promise<void> {
   const deck = newPitchSkeleton(title, slug);
   deck.hero.format = format;
   deck.hero.genre = genre;
+  const layout = String(formData.get("layout") ?? "cinematic");
+  if (layout === "cinematic" || layout === "editorial" || layout === "onepager") deck.layout = layout;
   await savePitch(deck);
   revalidatePath("/");
   redirect(`/studio/${slug}?welcome=1`);
@@ -62,9 +64,14 @@ export async function deletePitchAction(formData: FormData): Promise<void> {
   redirect("/studio");
 }
 
-export async function publishPitchAction(slug: string, status: "draft" | "in_review" | "published"): Promise<SaveResult> {
+export async function publishPitchAction(
+  slug: string,
+  status: "draft" | "in_review" | "published",
+  visibility?: "public" | "passcode",
+): Promise<SaveResult> {
   await requireAdmin();
   const deck = await getPitch(slug);
   if (!deck) return { ok: false, errors: ["Pitch not found"] };
-  return savePitchAction({ ...deck, status });
+  const security = visibility ? { ...deck.security, is_password_protected: visibility === "passcode" } : deck.security;
+  return savePitchAction({ ...deck, status, security });
 }

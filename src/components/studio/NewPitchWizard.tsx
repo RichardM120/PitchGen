@@ -8,6 +8,12 @@ import { createPitchAction } from "@/app/studio/actions";
 import { Stepper } from "./Stepper";
 
 const FORMATS = ["6 x 60' returnable drama", "8 x 30' comedy", "4 x 60' limited series", "Feature film", "Children's / animation", "Factual / documentary"];
+export const LAYOUTS = [
+  { id: "cinematic", name: "Cinematic", blurb: "Full-bleed hero, long scroll, image-led. Drama and thrillers." },
+  { id: "editorial", name: "Editorial", blurb: "Magazine pages, text-led, white space. Comedy, factual, returning series." },
+  { id: "onepager", name: "One-pager", blurb: "Everything on one screen with tabs. Fast read on a phone." },
+] as const;
+
 const GENRES = ["Crime", "Drama", "Comedy", "Thriller", "Family", "Period", "Sci-fi", "Romance", "Horror", "Documentary"];
 
 export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; audio: boolean; canSave: boolean }) {
@@ -16,6 +22,7 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
   const [title, setTitle] = useState("");
   const [format, setFormat] = useState("");
   const [genres, setGenres] = useState<string[]>([]);
+  const [layout, setLayout] = useState<(typeof LAYOUTS)[number]["id"]>("cinematic");
   const [notes, setNotes] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [busy, setBusy] = useState<"generate" | "blank" | null>(null);
@@ -30,6 +37,7 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
     const fd = new FormData();
     fd.set("title", title.trim());
     fd.set("notes", [format && `Format: ${format}`, genres.length && `Genre: ${genres.join(", ")}`, notes].filter(Boolean).join("\n\n"));
+    fd.set("layout", layout);
     if (file) fd.set("file", file);
     try {
       const res = await fetch(href("/api/generate"), { method: "POST", body: fd });
@@ -48,6 +56,7 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
     fd.set("title", title.trim());
     fd.set("format", format);
     fd.set("genre", genres.join(","));
+    fd.set("layout", layout);
     await createPitchAction(fd);
   }
 
@@ -79,6 +88,20 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
                 ))}
               </div>
               <input className="field mt-2" value={format} onChange={(e) => setFormat(e.target.value)} placeholder="Or type your own, e.g. 3 x 90' event drama" />
+            </div>
+
+            <div>
+              <span className="label">Layout</span>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {LAYOUTS.map((l) => (
+                  <button key={l.id} type="button" onClick={() => setLayout(l.id)} className={`rounded-xl border-2 p-3 text-left transition ${layout === l.id ? "border-accent-strong bg-accent-soft" : "border-line hover:border-accent"}`}>
+                    <LayoutThumb id={l.id} />
+                    <p className="mt-2 font-semibold">{l.name}</p>
+                    <p className="text-xs text-mute">{l.blurb}</p>
+                  </button>
+                ))}
+              </div>
+              <p className="hint">You can switch layouts any time in the editor. The content stays the same.</p>
             </div>
 
             <div>
@@ -127,9 +150,9 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
               </label>
               <label className="flex cursor-pointer items-center gap-3 rounded-xl border-2 border-dashed border-line px-4 py-4 text-sm hover:border-accent">
                 <FileText size={18} className="text-accent" />
-                <span className="flex-1">{file ? file.name : `PDF treatment${audio ? ", or a voice note (m4a, mp3)" : ""}`}</span>
+                <span className="flex-1">{file ? file.name : `Word (.docx) or PDF treatment${audio ? ", or a voice note (m4a, mp3)" : ""}`}</span>
                 <span className="btn btn-ghost py-1 text-xs">Choose</span>
-                <input id="file" type="file" className="hidden" accept={`.pdf,.txt,.md${audio ? ",audio/*,.m4a,.mp3,.wav" : ""}`} onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+                <input id="file" type="file" className="hidden" accept={`.pdf,.docx,.txt,.md${audio ? ",audio/*,.m4a,.mp3,.wav" : ""}`} onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
               </label>
               {!audio && <p className="hint">Voice notes need an OpenAI key in settings. For now, paste the transcript.</p>}
             </div>
@@ -156,5 +179,46 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
         </section>
       )}
     </div>
+  );
+}
+
+// Tiny wireframes so the choice is visual, not a label.
+export function LayoutThumb({ id }: { id: "cinematic" | "editorial" | "onepager" }) {
+  const c = "fill-accent-strong";
+  const m = "fill-surface-2";
+  return (
+    <svg viewBox="0 0 120 72" className="h-auto w-full rounded-md border border-line bg-bg">
+      {id === "cinematic" && (
+        <>
+          <rect x="0" y="0" width="120" height="34" className={c} />
+          <rect x="8" y="22" width="50" height="6" fill="#fff" />
+          <rect x="8" y="42" width="48" height="4" className={m} />
+          <rect x="8" y="50" width="48" height="4" className={m} />
+          <rect x="64" y="42" width="48" height="24" className={m} />
+        </>
+      )}
+      {id === "editorial" && (
+        <>
+          <rect x="8" y="8" width="60" height="8" className={c} />
+          <rect x="8" y="22" width="40" height="3" className={m} />
+          <rect x="8" y="28" width="44" height="3" className={m} />
+          <rect x="8" y="34" width="38" height="3" className={m} />
+          <rect x="72" y="8" width="40" height="28" className={m} />
+          <rect x="8" y="48" width="104" height="3" className={m} />
+          <rect x="8" y="54" width="90" height="3" className={m} />
+          <rect x="8" y="60" width="96" height="3" className={m} />
+        </>
+      )}
+      {id === "onepager" && (
+        <>
+          <rect x="8" y="8" width="104" height="10" className={m} />
+          <rect x="8" y="8" width="24" height="10" className={c} />
+          <rect x="8" y="24" width="104" height="40" rx="2" className={m} />
+          <rect x="14" y="30" width="40" height="5" className={c} />
+          <rect x="14" y="40" width="60" height="3" fill="#fff" />
+          <rect x="14" y="46" width="52" height="3" fill="#fff" />
+        </>
+      )}
+    </svg>
   );
 }

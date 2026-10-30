@@ -11,7 +11,10 @@ export const PitchDeckSchema = z.object({
   // draft: only in the Studio. in_review: shared for notes. published: live for viewers.
   status: z.preprocess((v) => (v === "sent" ? "published" : v), z.enum(["draft", "in_review", "published"])).default("draft"),
   is_demo: z.boolean().optional().default(false),
+  // How the deck renders. Same content, different page.
+  layout: z.enum(["cinematic", "editorial", "onepager"]).optional().default("cinematic"),
   security: z.object({
+    // false = public link: anyone with the URL can open it, no passcode.
     is_password_protected: z.boolean().default(true),
     // Optional deck-specific passcode for a commissioner. The shared studio
     // passcode always works too.

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { canSeeDeck, isAdmin, isViewer } from "@/lib/auth";
+import { getPitch } from "@/lib/store";
 
 // Access rules. Paths here exclude the basePath.
 //   /login, /api/login, /api/logout   public
@@ -23,6 +24,11 @@ export default async function proxy(req: NextRequest) {
     allowed = await isAdmin(c);
   } else if (deckMatch) {
     allowed = await canSeeDeck(c, deckMatch[1]);
+    if (!allowed) {
+      // Public link: published and not passcode-protected.
+      const d = await getPitch(deckMatch[1]);
+      allowed = Boolean(d && d.status === "published" && !d.security.is_password_protected);
+    }
   } else {
     allowed = await isViewer(c);
   }

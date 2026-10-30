@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Check, ExternalLink, Eye, Loader2, Save, Send, X } from "lucide-react";
+import { Check, Copy, ExternalLink, Eye, Globe, Loader2, Lock, Save, Send, X } from "lucide-react";
 import type { PitchDeckData } from "@/types/pitch";
 import { PitchDeckSchema } from "@/types/pitch";
 import { publishPitchAction, savePitchAction } from "@/app/studio/actions";
 import { Stepper } from "./Stepper";
+import { href } from "@/lib/base";
+import { Assist } from "./Assist";
+import { LAYOUTS, LayoutThumb } from "./NewPitchWizard";
 import { DeckView } from "@/components/deck/DeckView";
 import { Area, MediaField, Palette, Repeater, Select, Tags, Text, Toggle } from "./fields";
 
@@ -38,11 +41,13 @@ function completeness(d: PitchDeckData): Record<Tab, boolean> {
   };
 }
 
-export function Editor({ initial, welcome = false }: { initial: PitchDeckData; welcome?: boolean }) {
+export function Editor({ initial, welcome = false, aiReady = false, origin = "" }: { initial: PitchDeckData; welcome?: boolean; aiReady?: boolean; origin?: string }) {
   const [deck, setDeck] = useState<PitchDeckData>(initial);
   const [tab, setTab] = useState<Tab>("Overview");
   const [showWelcome, setShowWelcome] = useState(welcome);
   const [publishing, setPublishing] = useState(false);
+  const [publishOpen, setPublishOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
@@ -67,17 +72,28 @@ export function Editor({ initial, welcome = false }: { initial: PitchDeckData; w
   }, [deck]);
 
   const setStatus = useCallback(
-    async (status: PitchDeckData["status"]) => {
+    async (status: PitchDeckData["status"], visibility?: "public" | "passcode") => {
       setPublishing(true);
-      const res = await publishPitchAction(deck.slug, status);
+      const res = await publishPitchAction(deck.slug, status, visibility);
       setPublishing(false);
       if (res.ok) {
-        setDeck((d) => ({ ...d, status }));
-        setMsg({ ok: true, text: status === "published" ? "Published. Viewers can open it now." : "Taken back to " + status.replace("_", " ") });
+        setDeck((d) => ({ ...d, status, security: visibility ? { ...d.security, is_password_protected: visibility === "passcode" } : d.security }));
+        setMsg({ ok: true, text: status === "published" ? "Published." : "Taken back to " + status.replace("_", " ") });
+        setPublishOpen(false);
       } else setMsg({ ok: false, text: res.errors.join(" · ") });
     },
     [deck.slug],
   );
+
+  const shareUrl = `${origin}${href(`/p/${deck.slug}`)}`;
+  const isPublic = !deck.security.is_password_protected;
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {}
+  }
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -174,6 +190,7 @@ export function Editor({ initial, welcome = false }: { initial: PitchDeckData; w
             <p className="rounded-xl bg-surface px-4 py-3 text-sm text-fg-2">{GUIDE[tab]}</p>
             {tab === "Overview" && (
               <>
+                <Assist deck={deck} section="hero" enabled={aiReady} onApply={(v) => patch("hero", v as PitchDeckData["hero"])} />
                 <Text label="Title" value={h.title} onChange={(v) => patch("hero", { ...h, title: v })} />
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Text label="Format" value={h.format} placeholder="6 x 60' returnable drama" onChange={(v) => patch("hero", { ...h, format: v })} />
@@ -189,6 +206,7 @@ export function Editor({ initial, welcome = false }: { initial: PitchDeckData; w
 
             {tab === "World" && (
               <>
+                <Assist deck={deck} section="world_and_engine" enabled={aiReady} onApply={(v) => patch("world_and_engine", v as PitchDeckData["world_and_engine"])} />
                 <Area label="Synopsis" rows={5} value={w.synopsis} onChange={(v) => patch("world_and_engine", { ...w, synopsis: v })} />
                 <Area label="The series engine" rows={4} value={w.the_engine} hint="The repeatable conflict that generates episodes" onChange={(v) => patch("world_and_engine", { ...w, the_engine: v })} />
                 <Area label="Why now" rows={3} value={w.why_now} onChange={(v) => patch("world_and_engine", { ...w, why_now: v })} />
@@ -212,6 +230,8 @@ export function Editor({ initial, welcome = false }: { initial: PitchDeckData; w
             )}
 
             {tab === "Casting" && (
+              <>
+              <Assist deck={deck} section="casting" enabled={aiReady} onApply={(v) => patch("casting", v as PitchDeckData["casting"])} />
               <Repeater
                 label="Roles"
                 items={deck.casting}
@@ -247,10 +267,12 @@ export function Editor({ initial, welcome = false }: { initial: PitchDeckData; w
                   </>
                 )}
               </Repeater>
+              </>
             )}
 
             {tab === "Production" && (
               <>
+                <Assist deck={deck} section="production" enabled={aiReady} onApply={(v) => patch("production", v as PitchDeckData["production"])} />
                 <Repeater
                   label="Locations"
                   items={deck.production.locations}
@@ -281,6 +303,8 @@ export function Editor({ initial, welcome = false }: { initial: PitchDeckData; w
             )}
 
             {tab === "Episodes" && (
+              <>
+              <Assist deck={deck} section="episodic_arc" enabled={aiReady} onApply={(v) => patch("episodic_arc", v as PitchDeckData["episodic_arc"])} />
               <Repeater
                 label="Episodes"
                 items={deck.episodic_arc}
@@ -299,9 +323,12 @@ export function Editor({ initial, welcome = false }: { initial: PitchDeckData; w
                   </>
                 )}
               </Repeater>
+              </>
             )}
 
             {tab === "Team" && (
+              <>
+              <Assist deck={deck} section="team" enabled={aiReady} onApply={(v) => patch("team", v as PitchDeckData["team"])} />
               <Repeater
                 label="Team"
                 items={deck.team}
@@ -322,16 +349,42 @@ export function Editor({ initial, welcome = false }: { initial: PitchDeckData; w
                   </>
                 )}
               </Repeater>
+              </>
             )}
 
             {tab === "Access" && (
               <>
+                <div>
+                  <span className="label">Layout</span>
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {LAYOUTS.map((l) => (
+                      <button key={l.id} type="button" onClick={() => patch("layout", l.id)} className={`rounded-xl border-2 p-3 text-left transition ${deck.layout === l.id ? "border-accent-strong bg-accent-soft" : "border-line hover:border-accent"}`}>
+                        <LayoutThumb id={l.id} />
+                        <p className="mt-2 text-sm font-semibold">{l.name}</p>
+                      </button>
+                    ))}
+                  </div>
+                  <p className="hint">Same content, different page. The preview updates when you switch.</p>
+                </div>
+                <div>
+                  <span className="label">Who can open the link</span>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <button type="button" onClick={() => patch("security", { ...deck.security, is_password_protected: true })} className={`flex items-start gap-3 rounded-xl border-2 p-3 text-left ${!isPublic ? "border-accent-strong bg-accent-soft" : "border-line"}`}>
+                      <Lock size={18} className="mt-0.5 shrink-0 text-accent-strong" />
+                      <span><span className="block text-sm font-semibold">Passcode</span><span className="text-xs text-mute">The shared passcode, or a deck passcode below.</span></span>
+                    </button>
+                    <button type="button" onClick={() => patch("security", { ...deck.security, is_password_protected: false })} className={`flex items-start gap-3 rounded-xl border-2 p-3 text-left ${isPublic ? "border-accent-strong bg-accent-soft" : "border-line"}`}>
+                      <Globe size={18} className="mt-0.5 shrink-0 text-accent-strong" />
+                      <span><span className="block text-sm font-semibold">Public link</span><span className="text-xs text-mute">Anyone with the link can open it once published.</span></span>
+                    </button>
+                  </div>
+                </div>
                 <Text label="URL slug" value={deck.slug} hint="Lowercase letters, numbers and hyphens. Changing it changes the link." onChange={(v) => patch("slug", v.toLowerCase().replace(/[^a-z0-9-]/g, "-"))} />
                 <Text label="Deck passcode" value={deck.security.passcode} hint="Optional. Lets a commissioner open this deck only. Leave blank to rely on the shared passcode." onChange={(v) => patch("security", { ...deck.security, passcode: v })} />
                 <Text label="Recipient" value={deck.security.watermark_recipient} placeholder="Prepared for Drama Commissioning, BBC" hint="Shown in the watermark when the viewer gives no email" onChange={(v) => patch("security", { ...deck.security, watermark_recipient: v })} />
-                <div className="rounded-xl bg-surface p-4 text-sm text-fg-2">
-                  Share link: <span className="font-mono text-accent-strong">cwcasting.com/pitchgen/p/{deck.slug}</span>
-                  {deck.security.passcode ? ` with passcode ${deck.security.passcode}` : " (shared passcode)"}
+                <div className="flex flex-wrap items-center gap-3 rounded-xl bg-surface p-4 text-sm text-fg-2">
+                  <span className="min-w-0 flex-1 truncate">Link: <span className="font-mono text-accent-strong">{shareUrl}</span></span>
+                  <button type="button" className="btn btn-ghost py-1 text-xs" onClick={copyLink}><Copy size={13} /> {copied ? "Copied" : "Copy"}</button>
                 </div>
               </>
             )}
@@ -366,29 +419,61 @@ export function Editor({ initial, welcome = false }: { initial: PitchDeckData; w
         <span className="step-dot">4</span>
         <div className="min-w-0 flex-1">
           {published ? (
-            <p>
-              <strong>Published.</strong> Share <span className="font-mono text-accent-strong">cwcasting.com/pitchgen/p/{deck.slug}</span>
-              {deck.security.passcode ? ` with passcode ${deck.security.passcode}` : " with the shared passcode"}.
+            <p className="flex flex-wrap items-center gap-x-2">
+              <strong>{isPublic ? "Live on a public link." : "Published behind a passcode."}</strong>
+              <span className="truncate font-mono text-accent-strong">{shareUrl}</span>
+              <button type="button" className="btn btn-ghost py-0.5 text-xs" onClick={copyLink}><Copy size={12} /> {copied ? "Copied" : "Copy link"}</button>
             </p>
           ) : (
             <p className="text-fg-2">
-              <strong className="text-fg">Preview, then publish.</strong> {doneCount < 6 ? `${6 - doneCount} ${6 - doneCount === 1 ? "section is" : "sections are"} still empty.` : "All sections have content."} Viewers cannot see this pitch until it is published.
+              <strong className="text-fg">Preview, then publish.</strong> {doneCount < 6 ? `${6 - doneCount} ${6 - doneCount === 1 ? "section is" : "sections are"} still empty.` : "All sections have content."} Nobody else can see this pitch until it is published.
             </p>
           )}
         </div>
         <Link href={`/p/${deck.slug}`} target="_blank" className="btn btn-ghost py-1.5">
-          <ExternalLink size={14} /> Preview full page
+          <ExternalLink size={14} /> Preview
         </Link>
         {published ? (
           <button type="button" className="btn btn-ghost py-1.5" onClick={() => setStatus("draft")} disabled={publishing}>
             Unpublish
           </button>
         ) : (
-          <button type="button" className="btn btn-primary py-1.5" onClick={() => setStatus("published")} disabled={publishing || dirty}>
-            {publishing ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />} {dirty ? "Save first" : "Publish"}
+          <button type="button" className="btn btn-primary py-1.5" onClick={() => setPublishOpen(true)} disabled={publishing || dirty}>
+            <Send size={14} /> {dirty ? "Save first" : "Publish"}
           </button>
         )}
       </div>
+
+      {publishOpen && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-fg/40 p-4 sm:items-center" onClick={() => setPublishOpen(false)}>
+          <div className="card w-full max-w-lg p-6 shadow-xl md:p-8" onClick={(e) => e.stopPropagation()}>
+            <p className="eyebrow">Step 4</p>
+            <h2 className="mt-1 text-2xl">Publish {h.title || "this pitch"}</h2>
+            <p className="mt-2 text-fg-2">Choose who can open the link. You can change this later from the Access tab.</p>
+            <div className="mt-5 grid gap-3">
+              <button type="button" disabled={publishing} onClick={() => setStatus("published", "public")} className="flex items-start gap-3 rounded-xl border-2 border-line p-4 text-left hover:border-accent-strong hover:bg-accent-soft">
+                <Globe size={20} className="mt-0.5 shrink-0 text-accent-strong" />
+                <span>
+                  <span className="block font-semibold">Public link</span>
+                  <span className="text-sm text-mute">Anyone with the link can open it. No passcode. Best for sending to a commissioner.</span>
+                </span>
+              </button>
+              <button type="button" disabled={publishing} onClick={() => setStatus("published", "passcode")} className="flex items-start gap-3 rounded-xl border-2 border-line p-4 text-left hover:border-accent-strong hover:bg-accent-soft">
+                <Lock size={20} className="mt-0.5 shrink-0 text-accent-strong" />
+                <span>
+                  <span className="block font-semibold">Passcode protected</span>
+                  <span className="text-sm text-mute">Needs the shared passcode{deck.security.passcode ? ` or this deck's passcode (${deck.security.passcode})` : ""}.</span>
+                </span>
+              </button>
+            </div>
+            <p className="mt-4 text-xs text-mute">Link: <span className="font-mono">{shareUrl}</span>. Every page carries a confidential watermark either way.</p>
+            <div className="mt-5 flex justify-end gap-2">
+              <button type="button" className="btn btn-ghost py-1.5" onClick={() => setPublishOpen(false)} disabled={publishing}>Cancel</button>
+            </div>
+            {publishing && <p className="mt-3 inline-flex items-center gap-2 text-sm text-mute"><Loader2 size={14} className="animate-spin" /> Publishing</p>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

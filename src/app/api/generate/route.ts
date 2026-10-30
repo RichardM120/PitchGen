@@ -18,6 +18,7 @@ export async function POST(req: Request) {
   const form = await req.formData();
   const title = String(form.get("title") ?? "").trim();
   const notes = String(form.get("notes") ?? "").trim();
+  const layout = String(form.get("layout") ?? "cinematic");
   const file = form.get("file");
 
   const content: Anthropic.ContentBlockParam[] = [];
@@ -29,6 +30,11 @@ export async function POST(req: Request) {
       content.push({ type: "document", source: { type: "base64", media_type: "application/pdf", data: buf.toString("base64") } });
     } else if (file.type.startsWith("audio/") || /\.(m4a|mp3|wav|ogg|webm|mp4)$/i.test(file.name)) {
       transcript = await transcribe(file);
+    } else if (/\.docx$/i.test(file.name) || file.type.includes("wordprocessingml")) {
+      const mammoth = await import("mammoth");
+      transcript = (await mammoth.extractRawText({ buffer: buf })).value;
+    } else if (/\.doc$/i.test(file.name)) {
+      return NextResponse.json({ error: "Old .doc files are not supported. Save it as .docx or PDF and try again." }, { status: 400 });
     } else {
       transcript = buf.toString("utf8");
     }
@@ -59,7 +65,7 @@ export async function POST(req: Request) {
     try {
       const parsed = PitchDeckSchema.safeParse(JSON.parse(json));
       if (parsed.success) {
-        const deck = await savePitch({ ...parsed.data, slug, status: "draft" });
+        const deck = await savePitch({ ...parsed.data, slug, status: "draft", layout });
         return NextResponse.json({ slug: deck.slug });
       }
       messages.push({ role: "assistant", content: text });
