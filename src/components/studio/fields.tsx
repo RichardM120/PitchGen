@@ -196,7 +196,7 @@ export function Repeater<T>({
       <div className="space-y-3">
         {items.map((item, i) => (
           <details key={i} className="card group" open={items.length <= 3}>
-            <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold">
+            <summary className="flex cursor-pointer list-none items-center justify-between rounded-t-[var(--radius-pg)] px-4 py-3 text-sm font-semibold transition hover:bg-surface">
               <span className="font-medium">{title(item, i) || `Item ${i + 1}`}</span>
               <span className="flex items-center gap-2 text-mute">
                 <button type="button" className="hover:text-danger" title="Remove" onClick={(e) => { e.preventDefault(); onChange(items.filter((_, j) => j !== i)); }}>

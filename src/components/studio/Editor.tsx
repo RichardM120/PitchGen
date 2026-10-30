@@ -178,7 +178,7 @@ export function Editor({ initial, welcome = false, aiReady = false, origin = "" 
                 key={t}
                 type="button"
                 onClick={() => setTab(t)}
-                className={`inline-flex shrink-0 items-center gap-1.5 border-b-2 px-3 py-2 font-medium ${tab === t ? "border-accent-strong text-fg" : "border-transparent text-mute hover:text-fg"}`}
+                className={`inline-flex shrink-0 items-center gap-1.5 rounded-t-lg border-b-2 px-3 py-2 font-medium transition ${tab === t ? "border-accent-strong bg-accent-soft/60 text-fg" : "border-transparent text-mute hover:bg-surface hover:text-fg"}`}
               >
                 {t}
                 {t !== "Access" && t !== "JSON" && (done[t] ? <Check size={13} className="text-ok" /> : <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />)}

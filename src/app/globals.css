@@ -139,6 +139,26 @@ h1, h2, h3, .display {
   .btn:active {
     transform: translateY(1px);
   }
+  .btn:focus-visible,
+  .field:focus-visible,
+  .nav-link:focus-visible,
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid rgba(19, 112, 127, 0.45);
+    outline-offset: 2px;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 4px 14px rgba(15, 85, 99, 0.28);
+  }
+  .card {
+    transition: box-shadow 150ms, border-color 150ms, transform 150ms;
+  }
+  a.card:hover,
+  .card:has(> a:hover) {
+    border-color: var(--teal-300);
+    box-shadow: 0 8px 24px rgba(11, 18, 21, 0.08);
+    transform: translateY(-2px);
+  }
   .btn-primary {
     background: var(--accent-strong);
     color: #fff;
@@ -183,6 +203,23 @@ h1, h2, h3, .display {
   .panel {
     background: var(--surface);
     border-radius: var(--radius-pg);
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    font-weight: 600;
+    color: var(--fg-2);
+    transition: background 120ms, color 120ms;
+  }
+  .nav-link:hover {
+    background: var(--surface-2);
+    color: var(--fg);
+  }
+  .nav-link:active {
+    background: var(--teal-200);
   }
   .step-dot {
     display: inline-flex;

@@ -16,7 +16,7 @@ export default async function Dashboard() {
     <main className="mx-auto max-w-6xl px-5 py-10 md:px-8">
       <header className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-6">
         <div>
-          <PitchGenWordmark size={34} />
+          <PitchGenWordmark size={40} />
           <p className="mt-3 text-mute">
             {decks.length} {decks.length === 1 ? "pitch" : "pitches"} shared with you
           </p>

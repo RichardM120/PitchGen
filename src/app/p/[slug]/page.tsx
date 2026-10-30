@@ -37,16 +37,16 @@ export default async function DeckPage({ params }: Params) {
     <>
       <Watermark text={mark} />
 
-      <nav className="no-print sticky top-0 z-30 flex items-center gap-5 overflow-x-auto border-b border-line bg-bg/95 px-5 py-3 text-sm backdrop-blur md:px-12 lg:px-20">
+      <nav className="no-print sticky top-0 z-30 flex items-center gap-1 overflow-x-auto border-b border-line bg-bg/95 px-5 py-3 text-[15px] backdrop-blur md:px-12 lg:px-20">
         {viewer ? (
           <Link href={admin ? "/studio" : "/"} className="shrink-0" aria-label="Back">
-            <PitchGenMark size={24} />
+            <PitchGenMark size={30} />
           </Link>
         ) : (
-          <PitchGenMark size={24} />
+          <PitchGenMark size={30} />
         )}
         {NAV.map((n) => (
-          <a key={n.id} href={`#${n.id}`} className="shrink-0 font-medium text-mute hover:text-fg">
+          <a key={n.id} href={`#${n.id}`} className="nav-link shrink-0">
             {n.label}
           </a>
         ))}
