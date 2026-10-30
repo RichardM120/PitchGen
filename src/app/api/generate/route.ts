@@ -67,7 +67,7 @@ export async function POST(req: Request) {
       const parsed = PitchDeckSchema.safeParse(obj.deck ?? obj);
       if (parsed.success) {
         const source = file instanceof File && file.size > 0 ? file.name : notes ? "pasted notes" : "notes";
-        const extraction = { source, notes: (obj.notes as Record<string, { found: string[]; inferred: string[]; missing: string[] }>) ?? {}, confirmed: [] };
+        const extraction = { source, notes: (obj.notes as Record<string, { found: string[]; inferred: string[]; missing: string[]; recommendations?: string[] }>) ?? {}, confirmed: [] };
         const deck = await savePitch({ ...parsed.data, slug, status: "draft", layout, extraction });
         return NextResponse.json({ slug: deck.slug });
       }

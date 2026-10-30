@@ -42,7 +42,17 @@ export const PitchDeckSchema = z.object({
   extraction: z
     .object({
       source: z.string().default(""),
-      notes: z.record(z.string(), z.object({ found: z.array(z.string()).default([]), inferred: z.array(z.string()).default([]), missing: z.array(z.string()).default([]) })).default({}),
+      notes: z
+        .record(
+          z.string(),
+          z.object({
+            found: z.array(z.string()).default([]),
+            inferred: z.array(z.string()).default([]),
+            missing: z.array(z.string()).default([]),
+            recommendations: z.array(z.string()).default([]),
+          }),
+        )
+        .default({}),
       confirmed: z.array(z.string()).default([]),
     })
     .optional(),

@@ -36,12 +36,12 @@ Return ONLY this outer JSON object, no prose, no code fences. "deck" is the deck
 {
   "deck": { ...the deck object above... },
   "notes": {
-    "Overview":   { "found": ["what the source actually stated, briefly"], "inferred": ["what you had to invent or guess"], "missing": ["what the source does not cover"] },
-    "World":      { "found": [], "inferred": [], "missing": [] },
-    "Casting":    { "found": [], "inferred": [], "missing": [] },
-    "Production": { "found": [], "inferred": [], "missing": [] },
-    "Episodes":   { "found": [], "inferred": [], "missing": [] },
-    "Team":       { "found": [], "inferred": [], "missing": [] }
+    "Overview":   { "found": ["what the source actually stated, briefly"], "inferred": ["what you had to invent or guess"], "missing": ["what the source does not cover"], "recommendations": ["one to three concrete things that would strengthen this section for a commissioner"] },
+    "World":      { "found": [], "inferred": [], "missing": [], "recommendations": [] },
+    "Casting":    { "found": [], "inferred": [], "missing": [], "recommendations": [] },
+    "Production": { "found": [], "inferred": [], "missing": [], "recommendations": [] },
+    "Episodes":   { "found": [], "inferred": [], "missing": [], "recommendations": [] },
+    "Team":       { "found": [], "inferred": [], "missing": [], "recommendations": [] }
   }
 }
-Be honest in notes: anything not in the source goes under inferred or missing. Keep each note to one short line.`;
+Be honest in notes: anything not in the source goes under inferred or missing. Recommendations are the kind a seasoned development exec would give: a sharper logline, a missing antagonist, a budget line that needs a figure, a comp that is too old. Keep each note to one short line.`;

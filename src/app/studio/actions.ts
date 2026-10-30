@@ -41,7 +41,7 @@ export async function createPitchAction(formData: FormData): Promise<void> {
   deck.hero.format = format;
   deck.hero.genre = genre;
   const layout = String(formData.get("layout") ?? "cinematic");
-  if (layout === "cinematic" || layout === "editorial" || layout === "onepager") deck.layout = layout;
+  if (["cinematic", "editorial", "onepager", "lookbook", "treatment"].includes(layout)) deck.layout = layout as typeof deck.layout;
   await savePitch(deck);
   revalidatePath("/");
   redirect(`/studio/${slug}?welcome=1`);

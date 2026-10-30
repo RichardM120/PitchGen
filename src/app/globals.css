@@ -215,7 +215,7 @@ h1, h2, h3, .display {
     transition: background 120ms, color 120ms;
   }
   .nav-link:hover {
-    background: var(--surface-2);
+    background: var(--teal-200);
     color: var(--fg);
   }
   .nav-link:active {

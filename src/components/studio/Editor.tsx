@@ -138,7 +138,7 @@ export function Editor({ initial, welcome = false, aiReady = false, origin = "",
   return (
     <div className="flex flex-col lg:h-[calc(100vh-57px)]">
       {/* Step bar */}
-      <div className="sticky top-[57px] z-20 border-b border-line bg-bg px-4 py-2.5 md:px-6">
+      <div className="sticky top-[57px] z-20 border-b border-line bg-surface px-4 py-2.5 md:px-6">
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <Stepper current={published ? 4 : 3} slug={deck.slug} />
           <span className="ml-auto flex items-center gap-2 text-sm">
@@ -204,6 +204,19 @@ export function Editor({ initial, welcome = false, aiReady = false, origin = "",
                 </button>
               )}
             </div>
+            {(() => {
+              const recs = isHideable(tab) || tab === "Overview" ? deck.extraction?.notes?.[tab]?.recommendations ?? [] : [];
+              return recs.length ? (
+                <div className="rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm">
+                  <p className="text-xs font-bold uppercase tracking-wider text-accent-strong">Recommendations</p>
+                  <ul className="mt-1 list-disc space-y-0.5 pl-5 text-fg-2">
+                    {recs.map((r) => (
+                      <li key={r}>{r}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null;
+            })()}
             {isHideable(tab) && hiddenSet.has(tab) && (
               <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-900">This section is hidden. It will not appear in the deck or count towards completion. Your content is kept.</p>
             )}

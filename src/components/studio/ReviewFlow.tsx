@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, CircleAlert, EyeOff, FileText, Loader2, PenLine, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, CircleAlert, EyeOff, FileText, Lightbulb, Loader2, PenLine, Sparkles } from "lucide-react";
 import type { PitchDeckData } from "@/types/pitch";
 import { PitchDeckSchema } from "@/types/pitch";
 import { confirmSectionAction } from "@/app/studio/actions";
@@ -84,7 +84,7 @@ export function ReviewFlow({ initial, aiReady }: { initial: PitchDeckData; aiRea
 
   return (
     <div className="flex flex-col lg:h-[calc(100vh-57px)]">
-      <div className="border-b border-line bg-bg px-4 py-2.5 md:px-6">
+      <div className="border-b border-line bg-surface px-4 py-2.5 md:px-6">
         <Stepper current={3} slug={deck.slug} />
       </div>
 
@@ -116,6 +116,17 @@ export function ReviewFlow({ initial, aiReady }: { initial: PitchDeckData; aiRea
                 <NoteList icon={<FileText size={14} className="text-ok" />} title="From the document" items={notes.found} empty="Nothing specific" />
                 <NoteList icon={<Sparkles size={14} className="text-accent-strong" />} title="Inferred by AI" items={notes.inferred} empty="Nothing inferred" tone="accent" />
                 <NoteList icon={<CircleAlert size={14} className="text-warn" />} title="Not in the document" items={notes.missing} empty="Nothing missing" tone="warn" />
+              </div>
+            )}
+
+            {notes && notes.recommendations?.length > 0 && (
+              <div className="mt-3 rounded-xl border border-teal-200 bg-teal-50 p-3 text-sm">
+                <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-strong"><Lightbulb size={14} /> Recommendations</p>
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-fg-2">
+                  {notes.recommendations.map((r) => (
+                    <li key={r}>{r}</li>
+                  ))}
+                </ul>
               </div>
             )}
 
