@@ -59,6 +59,15 @@ Product: interactive, watermarked HTML pitch portals for UK drama. PitchGen is i
 - [x] Three layouts, chosen at Step 1 and switchable in Access: Cinematic, Editorial, One-pager
 - [x] Publish dialog: public link (no passcode) or passcode protected; Copy link
 
+## Phase 2.3: Media section (30 Oct 2026)
+
+- [x] Media tab: drag-and-drop bulk upload, per-pitch library, one-click "Use as" placement into any slot, download, credit line
+- [x] Reference finder: AI writes a stills search list (queries plus reference films with DPs) from the deck; copy buttons; Film-Grab links
+- [x] Source picker: ShotDeck, Flim, Shot Cafe, Film-Grab, MovieStillsDB, Film Vibes, SceneClipper, PlayPhrase, with cost and login notes; third-party disclaimer
+- [x] Publish dialog warns when credited reference frames would go on a public link
+- [ ] "Save to PitchGen" browser extension (right-click any frame on ShotDeck or Flim into a deck)
+- [ ] Lookbook and Treatment layouts
+
 ## Phase 3: Telemetry and pilots (weeks 3 to 4)
 
 - [ ] Log section views and tape plays per viewer

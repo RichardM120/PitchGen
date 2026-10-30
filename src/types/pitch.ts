@@ -22,6 +22,28 @@ export const PitchDeckSchema = z.object({
     watermark_recipient: z.string().optional().default(""),
   }),
   updated_at: z.string().optional(),
+  // Per-pitch media library. Assets live here whether or not a section uses them.
+  media: z
+    .array(
+      z.object({
+        url: z.string(),
+        kind: z.enum(["image", "video"]),
+        name: z.string().default(""),
+        credit: z.string().default(""),
+        added_at: z.string().default(""),
+      }),
+    )
+    .optional()
+    .default([]),
+  // Saved output of the reference finder.
+  references: z
+    .object({
+      queries: z.array(z.object({ q: z.string(), why: z.string().default("") })).default([]),
+      films: z.array(z.object({ title: z.string(), year: z.string().default(""), dp: z.string().default(""), why: z.string().default("") })).default([]),
+      generated_at: z.string().default(""),
+    })
+    .optional()
+    .default({ queries: [], films: [], generated_at: "" }),
   hero: z.object({
     title: z.string(),
     format: z.string(),

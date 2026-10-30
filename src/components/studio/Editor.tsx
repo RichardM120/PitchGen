@@ -9,11 +9,12 @@ import { publishPitchAction, savePitchAction } from "@/app/studio/actions";
 import { Stepper } from "./Stepper";
 import { href } from "@/lib/base";
 import { Assist } from "./Assist";
+import { MediaTab } from "./MediaTab";
 import { LAYOUTS, LayoutThumb } from "./NewPitchWizard";
 import { DeckView } from "@/components/deck/DeckView";
 import { Area, MediaField, Palette, Repeater, Select, Tags, Text, Toggle } from "./fields";
 
-const TABS = ["Overview", "World", "Casting", "Production", "Episodes", "Team", "Access", "JSON"] as const;
+const TABS = ["Overview", "World", "Casting", "Production", "Episodes", "Team", "Media", "Access", "JSON"] as const;
 type Tab = (typeof TABS)[number];
 
 // What each tab is for, shown above the fields so nobody has to guess.
@@ -24,6 +25,7 @@ const GUIDE: Record<Tab, string> = {
   Production: "Where it shoots and why those places work on screen. Budget band, UK tax relief and co-production options.",
   Episodes: "An outline per episode: title, hook and a short synopsis. Three is enough for a first pitch.",
   Team: "Who is behind it. Producers, writers, director and attached talent, with credits.",
+  Media: "Every image and video for this pitch in one place. Upload in bulk, place each file with one click, download, and let the reference finder write your stills search list.",
   Access: "Who can open this pitch. Set a passcode for a commissioner and the name that appears in the watermark.",
   JSON: "Power editing. Paste a whole deck in, or copy this one out.",
 };
@@ -36,6 +38,7 @@ function completeness(d: PitchDeckData): Record<Tab, boolean> {
     Production: d.production.locations.length > 0 && Boolean(d.production.financials.indicative_budget_band),
     Episodes: d.episodic_arc.length > 0,
     Team: d.team.length > 0,
+    Media: true,
     Access: true,
     JSON: true,
   };
@@ -181,7 +184,7 @@ export function Editor({ initial, welcome = false, aiReady = false, origin = "" 
                 className={`inline-flex shrink-0 items-center gap-1.5 rounded-t-lg border-b-2 px-3 py-2 font-medium transition ${tab === t ? "border-accent-strong bg-accent-soft/60 text-fg" : "border-transparent text-mute hover:bg-surface hover:text-fg"}`}
               >
                 {t}
-                {t !== "Access" && t !== "JSON" && (done[t] ? <Check size={13} className="text-ok" /> : <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />)}
+                {t !== "Access" && t !== "JSON" && t !== "Media" && (done[t] ? <Check size={13} className="text-ok" /> : <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />)}
               </button>
             ))}
           </div>
@@ -352,6 +355,10 @@ export function Editor({ initial, welcome = false, aiReady = false, origin = "" 
               </>
             )}
 
+            {tab === "Media" && (
+              <MediaTab deck={deck} aiReady={aiReady} onChange={(d) => { setDeck(d); setDirty(true); setMsg(null); }} />
+            )}
+
             {tab === "Access" && (
               <>
                 <div>
@@ -466,6 +473,9 @@ export function Editor({ initial, welcome = false, aiReady = false, origin = "" 
                 </span>
               </button>
             </div>
+            {deck.media.some((m) => m.credit) && (
+              <p className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">This deck uses credited reference frames from other productions. A public link publishes them; passcode protected is the safer choice.</p>
+            )}
             <p className="mt-4 text-xs text-mute">Link: <span className="font-mono">{shareUrl}</span>. Every page carries a confidential watermark either way.</p>
             <div className="mt-5 flex justify-end gap-2">
               <button type="button" className="btn btn-ghost py-1.5" onClick={() => setPublishOpen(false)} disabled={publishing}>Cancel</button>
