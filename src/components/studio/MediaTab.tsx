@@ -232,6 +232,9 @@ export function MediaTab({ deck, onChange, aiReady }: { deck: Deck; onChange: (d
               </a>
             ))}
           </div>
+          <p className="mt-3 rounded-lg bg-bg px-3 py-2 text-sm">
+            <strong>Faster:</strong> install the <a href="https://github.com/RichardM120/PitchGen/tree/main/extension" target="_blank" rel="noreferrer" className="font-semibold text-accent-strong">Save to PitchGen</a> Chrome extension. Right-click any frame on these sites and it lands in this library with the credit filled in.
+          </p>
           <p className="hint">These are third-party services. PitchGen is not affiliated with them and does not supply, license or check any images or clips you take from them. You are responsible for having the rights to anything you put in a pitch.</p>
         </div>
 

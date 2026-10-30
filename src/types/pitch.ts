@@ -12,7 +12,7 @@ export const PitchDeckSchema = z.object({
   status: z.preprocess((v) => (v === "sent" ? "published" : v), z.enum(["draft", "in_review", "published"])).default("draft"),
   is_demo: z.boolean().optional().default(false),
   // How the deck renders. Same content, different page.
-  layout: z.enum(["cinematic", "editorial", "onepager"]).optional().default("cinematic"),
+  layout: z.enum(["cinematic", "editorial", "onepager", "lookbook", "treatment"]).optional().default("cinematic"),
   security: z.object({
     // false = public link: anyone with the URL can open it, no passcode.
     is_password_protected: z.boolean().default(true),

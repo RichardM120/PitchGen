@@ -240,6 +240,22 @@ h1, h2, h3, .display {
   }
 }
 
+/* Treatment layout: document prose */
+.prose-treatment p {
+  margin-top: 0.9rem;
+  line-height: 1.7;
+  font-size: 1.02rem;
+}
+.prose-treatment h3 {
+  margin-top: 1.6rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.prose-treatment h3 + p {
+  margin-top: 0.4rem;
+}
+
 /* Deck pages: the cinematic sections sit on white with dark imagery. */
 .deck-hero-overlay {
   background: linear-gradient(to top, rgba(4, 23, 28, 0.92) 0%, rgba(4, 23, 28, 0.45) 45%, rgba(4, 23, 28, 0) 100%);

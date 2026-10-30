@@ -12,6 +12,8 @@ export const LAYOUTS = [
   { id: "cinematic", name: "Cinematic", blurb: "Full-bleed hero, long scroll, image-led. Drama and thrillers." },
   { id: "editorial", name: "Editorial", blurb: "Magazine pages, text-led, white space. Comedy, factual, returning series." },
   { id: "onepager", name: "One-pager", blurb: "Everything on one screen with tabs. Fast read on a phone." },
+  { id: "lookbook", name: "Lookbook", blurb: "Image first. Big stills, short captions. For tone and visual references." },
+  { id: "treatment", name: "Treatment", blurb: "Text first, long form. Reads like a document, prints well." },
 ] as const;
 
 const GENRES = ["Crime", "Drama", "Comedy", "Thriller", "Family", "Period", "Sci-fi", "Romance", "Horror", "Documentary"];
@@ -23,6 +25,14 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
   const [format, setFormat] = useState("");
   const [genres, setGenres] = useState<string[]>([]);
   const [layout, setLayout] = useState<(typeof LAYOUTS)[number]["id"]>("cinematic");
+  const [customGenre, setCustomGenre] = useState("");
+
+  function addCustomGenre() {
+    const g = customGenre.trim();
+    if (!g) return;
+    if (!genres.some((x) => x.toLowerCase() === g.toLowerCase())) setGenres([...genres, g]);
+    setCustomGenre("");
+  }
   const [notes, setNotes] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [busy, setBusy] = useState<"generate" | "blank" | null>(null);
@@ -92,7 +102,7 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
 
             <div>
               <span className="label">Layout</span>
-              <div className="grid gap-3 sm:grid-cols-3">
+              <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 {LAYOUTS.map((l) => (
                   <button key={l.id} type="button" onClick={() => setLayout(l.id)} className={`rounded-xl border-2 p-3 text-left transition ${layout === l.id ? "border-accent-strong bg-accent-soft" : "border-line hover:border-accent"}`}>
                     <LayoutThumb id={l.id} />
@@ -105,9 +115,9 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
             </div>
 
             <div>
-              <span className="label">Genre (pick any)</span>
+              <span className="label">Genre (pick any, or add your own)</span>
               <div className="flex flex-wrap gap-2">
-                {GENRES.map((g) => {
+                {[...GENRES, ...genres.filter((g) => !(GENRES as readonly string[]).includes(g))].map((g) => {
                   const on = genres.includes(g);
                   return (
                     <button key={g} type="button" onClick={() => setGenres(on ? genres.filter((x) => x !== g) : [...genres, g])} className={`btn py-1.5 text-sm ${on ? "btn-primary" : "btn-ghost"}`}>
@@ -115,6 +125,23 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
                     </button>
                   );
                 })}
+              </div>
+              <div className="mt-2 flex gap-2">
+                <input
+                  className="field"
+                  value={customGenre}
+                  onChange={(e) => setCustomGenre(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addCustomGenre();
+                    }
+                  }}
+                  placeholder="Add your own, e.g. Coastal noir, Folk horror, Workplace comedy"
+                />
+                <button type="button" className="btn btn-ghost shrink-0" onClick={addCustomGenre} disabled={!customGenre.trim()}>
+                  Add
+                </button>
               </div>
             </div>
           </div>
@@ -183,7 +210,7 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
 }
 
 // Tiny wireframes so the choice is visual, not a label.
-export function LayoutThumb({ id }: { id: "cinematic" | "editorial" | "onepager" }) {
+export function LayoutThumb({ id }: { id: "cinematic" | "editorial" | "onepager" | "lookbook" | "treatment" }) {
   const c = "fill-accent-strong";
   const m = "fill-surface-2";
   return (
@@ -207,6 +234,29 @@ export function LayoutThumb({ id }: { id: "cinematic" | "editorial" | "onepager"
           <rect x="8" y="48" width="104" height="3" className={m} />
           <rect x="8" y="54" width="90" height="3" className={m} />
           <rect x="8" y="60" width="96" height="3" className={m} />
+        </>
+      )}
+      {id === "lookbook" && (
+        <>
+          <rect x="8" y="8" width="50" height="34" className={c} />
+          <rect x="62" y="8" width="50" height="16" className={m} />
+          <rect x="62" y="26" width="24" height="16" className={m} />
+          <rect x="88" y="26" width="24" height="16" className={m} />
+          <rect x="8" y="46" width="24" height="18" className={m} />
+          <rect x="34" y="46" width="24" height="18" className={m} />
+          <rect x="62" y="46" width="50" height="18" className={m} />
+        </>
+      )}
+      {id === "treatment" && (
+        <>
+          <rect x="30" y="8" width="60" height="6" className={c} />
+          <rect x="24" y="20" width="72" height="3" className={m} />
+          <rect x="24" y="26" width="72" height="3" className={m} />
+          <rect x="24" y="32" width="60" height="3" className={m} />
+          <rect x="24" y="42" width="30" height="4" className={c} />
+          <rect x="24" y="50" width="72" height="3" className={m} />
+          <rect x="24" y="56" width="72" height="3" className={m} />
+          <rect x="24" y="62" width="48" height="3" className={m} />
         </>
       )}
       {id === "onepager" && (
