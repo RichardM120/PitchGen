@@ -35,6 +35,17 @@ export const PitchDeckSchema = z.object({
     )
     .optional()
     .default([]),
+  // Sections the team chose not to show. Keys match the editor tabs.
+  hidden_sections: z.array(z.enum(["World", "Casting", "Production", "Episodes", "Team"])).optional().default([]),
+  // What the AI extraction found, inferred and could not find, per section.
+  // Drives the section-by-section review after an upload.
+  extraction: z
+    .object({
+      source: z.string().default(""),
+      notes: z.record(z.string(), z.object({ found: z.array(z.string()).default([]), inferred: z.array(z.string()).default([]), missing: z.array(z.string()).default([]) })).default({}),
+      confirmed: z.array(z.string()).default([]),
+    })
+    .optional(),
   // Saved output of the reference finder.
   references: z
     .object({

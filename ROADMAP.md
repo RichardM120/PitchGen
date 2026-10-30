@@ -69,6 +69,12 @@ Product: interactive, watermarked HTML pitch portals for UK drama. PitchGen is i
 - [x] Lookbook and Treatment layouts (five in total)
 - [x] Custom genre at Step 1
 
+## Phase 2.4: Guided review and optional sections (30 Oct 2026)
+
+- [x] Extraction notes: the AI reports per section what the source stated, what it inferred, what is missing
+- [x] Review flow after an upload: one section at a time with those notes, confirm or edit in place, live preview
+- [x] Hide section: any section except Overview can be left out of the deck, the nav and the completion count; content is kept
+
 ## Phase 3: Telemetry and pilots (weeks 3 to 4)
 
 - [ ] Log section views and tape plays per viewer

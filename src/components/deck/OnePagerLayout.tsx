@@ -6,11 +6,14 @@ import { Media, ratioOf } from "@/components/ui/Media";
 import { VideoButton } from "@/components/ui/VideoModal";
 import { EpisodicArc } from "./EpisodicArc";
 
-const TABS = ["Concept", "World", "Casting", "Locations", "Episodes", "Package"] as const;
+const ALL_TABS = ["Concept", "World", "Casting", "Locations", "Episodes", "Package"] as const;
+const HIDE_KEY: Record<string, string> = { World: "World", Casting: "Casting", Locations: "Production", Episodes: "Episodes", Package: "Team" };
 
 // One-pager: everything within one screen, tabbed. Fast to read on a phone.
 export function OnePagerLayout({ deck }: { deck: PitchDeckData }) {
-  const [tab, setTab] = useState<(typeof TABS)[number]>("Concept");
+  const hide = new Set<string>(deck.hidden_sections);
+  const TABS = ALL_TABS.filter((t) => !HIDE_KEY[t] || !hide.has(HIDE_KEY[t]) || (t === "Package" && !hide.has("Production")));
+  const [tab, setTab] = useState<(typeof ALL_TABS)[number]>("Concept");
   const { hero: h, world_and_engine: w, production: pr } = deck;
   const pal = w.color_palette;
 

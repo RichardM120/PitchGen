@@ -6,13 +6,18 @@ import { EpisodicArc } from "./EpisodicArc";
 type P = { deck: PitchDeckData };
 
 export const NAV = [
-  { id: "concept", label: "Concept" },
-  { id: "engine", label: "World" },
-  { id: "casting", label: "Casting" },
-  { id: "locations", label: "Locations" },
-  { id: "episodes", label: "Episodes" },
-  { id: "package", label: "Package" },
-];
+  { id: "concept", label: "Concept", section: "" },
+  { id: "engine", label: "World", section: "World" },
+  { id: "casting", label: "Casting", section: "Casting" },
+  { id: "locations", label: "Locations", section: "Production" },
+  { id: "episodes", label: "Episodes", section: "Episodes" },
+  { id: "package", label: "Package", section: "Team" },
+] as const;
+
+export function navFor(deck: PitchDeckData) {
+  const hide = new Set<string>(deck.hidden_sections);
+  return NAV.filter((n) => !n.section || !hide.has(n.section));
+}
 
 function Section({ id, n, title, children }: { id: string; n: string; title: string; children: React.ReactNode }) {
   return (
@@ -152,6 +157,7 @@ export function Episodes({ deck }: P) {
 export function PackageFinancials({ deck }: P) {
   const f = deck.production.financials;
   const palette = deck.world_and_engine.color_palette;
+  const hide = new Set<string>(deck.hidden_sections);
   const rows: [string, string][] = [
     ["Budget band", f.indicative_budget_band],
     ["UK tax relief", f.uk_tax_relief_eligible ? f.tax_relief_notes : "Not eligible / TBC"],
@@ -161,6 +167,7 @@ export function PackageFinancials({ deck }: P) {
   return (
     <Section id="package" n="06" title="Package">
       <div className="grid gap-12 lg:grid-cols-2">
+        {!hide.has("Production") && (
         <dl className="divide-y divide-line border-y border-line">
           {rows.map(([k, v]) => (
             <div key={k} className="grid grid-cols-[150px_1fr] gap-4 py-4">
@@ -169,6 +176,8 @@ export function PackageFinancials({ deck }: P) {
             </div>
           ))}
         </dl>
+        )}
+        {!hide.has("Team") && (
         <div className="grid gap-6 sm:grid-cols-2">
           {deck.team.map((t) => (
             <div key={t.name} className="flex gap-4">
@@ -187,6 +196,7 @@ export function PackageFinancials({ deck }: P) {
             </div>
           ))}
         </div>
+        )}
       </div>
     </Section>
   );

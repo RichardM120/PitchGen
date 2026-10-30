@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { ZodError } from "zod";
+import { PitchDeckSchema } from "@/types/pitch";
 import { isAdmin } from "@/lib/auth";
 import { slugify } from "@/lib/slug";
 import { deletePitch, getPitch, newPitchSkeleton, savePitch } from "@/lib/store";
@@ -74,4 +75,14 @@ export async function publishPitchAction(
   if (!deck) return { ok: false, errors: ["Pitch not found"] };
   const security = visibility ? { ...deck.security, is_password_protected: visibility === "passcode" } : deck.security;
   return savePitchAction({ ...deck, status, security });
+}
+
+export async function confirmSectionAction(data: unknown, section: string): Promise<SaveResult> {
+  await requireAdmin();
+  const parsed = PitchDeckSchema.safeParse(data);
+  if (!parsed.success) return { ok: false, errors: parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`) };
+  const d = parsed.data;
+  const ex = d.extraction ?? { source: "", notes: {}, confirmed: [] };
+  const confirmed = ex.confirmed.includes(section) ? ex.confirmed : [...ex.confirmed, section];
+  return savePitchAction({ ...d, extraction: { ...ex, confirmed } });
 }

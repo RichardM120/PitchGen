@@ -8,6 +8,7 @@ import { EpisodicArc } from "./EpisodicArc";
 export function EditorialLayout({ deck }: { deck: PitchDeckData }) {
   const { hero: h, world_and_engine: w, production: pr } = deck;
   const pal = w.color_palette;
+  const hide = new Set<string>(deck.hidden_sections);
   return (
     <div className="bg-bg text-fg">
       {/* Masthead */}
@@ -38,6 +39,7 @@ export function EditorialLayout({ deck }: { deck: PitchDeckData }) {
       </section>
 
       {/* World */}
+      {!hide.has("World") && (
       <section id="engine" className="border-t border-line">
         <div className="mx-auto grid max-w-5xl gap-10 px-5 py-14 md:grid-cols-[1fr_1.4fr] md:px-8">
           <div>
@@ -64,8 +66,10 @@ export function EditorialLayout({ deck }: { deck: PitchDeckData }) {
           </div>
         </div>
       </section>
+      )}
 
       {/* Casting */}
+      {!hide.has("Casting") && (
       <section id="casting" className="border-t border-line">
         <div className="mx-auto max-w-5xl px-5 py-14 md:px-8">
           <p className="eyebrow">Casting</p>
@@ -96,8 +100,10 @@ export function EditorialLayout({ deck }: { deck: PitchDeckData }) {
           </div>
         </div>
       </section>
+      )}
 
       {/* Locations and episodes */}
+      {!hide.has("Production") && (
       <section id="locations" className="border-t border-line bg-surface">
         <div className="mx-auto max-w-5xl px-5 py-14 md:px-8">
           <p className="eyebrow">Locations</p>
@@ -116,7 +122,9 @@ export function EditorialLayout({ deck }: { deck: PitchDeckData }) {
           </div>
         </div>
       </section>
+      )}
 
+      {!hide.has("Episodes") && (
       <section id="episodes" className="border-t border-line">
         <div className="mx-auto max-w-5xl px-5 py-14 md:px-8">
           <p className="eyebrow">Episodes</p>
@@ -126,10 +134,13 @@ export function EditorialLayout({ deck }: { deck: PitchDeckData }) {
           </div>
         </div>
       </section>
+      )}
 
       {/* Package */}
+      {(!hide.has("Production") || !hide.has("Team")) && (
       <section id="package" className="border-t border-line">
         <div className="mx-auto grid max-w-5xl gap-10 px-5 py-14 md:grid-cols-2 md:px-8">
+          {!hide.has("Production") && (
           <div>
             <p className="eyebrow">Package</p>
             <h2 className="mt-2 text-3xl">The numbers</h2>
@@ -147,6 +158,8 @@ export function EditorialLayout({ deck }: { deck: PitchDeckData }) {
               ))}
             </dl>
           </div>
+          )}
+          {!hide.has("Team") && (
           <div>
             <p className="eyebrow">Team</p>
             <h2 className="mt-2 text-3xl">Who is behind it</h2>
@@ -165,8 +178,10 @@ export function EditorialLayout({ deck }: { deck: PitchDeckData }) {
               ))}
             </ul>
           </div>
+          )}
         </div>
       </section>
+      )}
     </div>
   );
 }

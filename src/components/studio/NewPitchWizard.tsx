@@ -53,7 +53,7 @@ export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; 
       const res = await fetch(href("/api/generate"), { method: "POST", body: fd });
       const json = (await res.json()) as { slug?: string; error?: string };
       if (!res.ok || !json.slug) throw new Error(json.error ?? `Failed (${res.status})`);
-      router.push(`/studio/${json.slug}?welcome=1`);
+      router.push(`/studio/${json.slug}/review`);
     } catch (e) {
       setError((e as Error).message);
       setBusy(null);

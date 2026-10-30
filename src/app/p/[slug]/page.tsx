@@ -6,7 +6,7 @@ import { PenLine, Printer } from "lucide-react";
 import { getPitch } from "@/lib/store";
 import { EMAIL_COOKIE, isAdmin, isViewer } from "@/lib/auth";
 import { Watermark } from "@/components/ui/Watermark";
-import { NAV } from "@/components/deck/Sections";
+import { navFor } from "@/components/deck/Sections";
 import { DeckView } from "@/components/deck/DeckView";
 import { PrintButton } from "@/components/ui/PrintButton";
 import { PitchGenMark } from "@/components/brand/Logo";
@@ -45,7 +45,7 @@ export default async function DeckPage({ params }: Params) {
         ) : (
           <PitchGenMark size={30} />
         )}
-        {NAV.map((n) => (
+        {navFor(deck).map((n) => (
           <a key={n.id} href={`#${n.id}`} className="nav-link shrink-0">
             {n.label}
           </a>

@@ -9,6 +9,7 @@ export function LookbookLayout({ deck }: { deck: PitchDeckData }) {
   const pal = w.color_palette;
   const library = deck.media.filter((m) => m.kind === "image");
   const stills = w.mood_stills.filter((s) => s.url);
+  const hide = new Set<string>(deck.hidden_sections);
   const extra = library.filter((m) => !stills.some((s) => s.url === m.url) && m.url !== h.hero_image_url);
 
   return (
@@ -53,6 +54,7 @@ export function LookbookLayout({ deck }: { deck: PitchDeckData }) {
         </div>
       </section>
 
+      {!hide.has("Production") && (
       <section id="locations" className="border-t border-line px-5 py-12 md:px-12 lg:px-20">
         <p className="eyebrow">Places</p>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -67,7 +69,9 @@ export function LookbookLayout({ deck }: { deck: PitchDeckData }) {
           ))}
         </div>
       </section>
+      )}
 
+      {!hide.has("Casting") && (
       <section id="casting" className="border-t border-line px-5 py-12 md:px-12 lg:px-20">
         <p className="eyebrow">Faces</p>
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
@@ -89,6 +93,7 @@ export function LookbookLayout({ deck }: { deck: PitchDeckData }) {
           </div>
         )}
       </section>
+      )}
 
       <section id="package" className="border-t border-line px-5 py-8 text-sm text-mute md:px-12 lg:px-20">
         {h.comparables && <p>Comparables: {h.comparables}</p>}

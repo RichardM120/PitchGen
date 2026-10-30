@@ -63,9 +63,12 @@ export async function POST(req: Request) {
     const json = text.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/, "").trim();
 
     try {
-      const parsed = PitchDeckSchema.safeParse(JSON.parse(json));
+      const obj = JSON.parse(json) as { deck?: unknown; notes?: unknown };
+      const parsed = PitchDeckSchema.safeParse(obj.deck ?? obj);
       if (parsed.success) {
-        const deck = await savePitch({ ...parsed.data, slug, status: "draft", layout });
+        const source = file instanceof File && file.size > 0 ? file.name : notes ? "pasted notes" : "notes";
+        const extraction = { source, notes: (obj.notes as Record<string, { found: string[]; inferred: string[]; missing: string[] }>) ?? {}, confirmed: [] };
+        const deck = await savePitch({ ...parsed.data, slug, status: "draft", layout, extraction });
         return NextResponse.json({ slug: deck.slug });
       }
       messages.push({ role: "assistant", content: text });

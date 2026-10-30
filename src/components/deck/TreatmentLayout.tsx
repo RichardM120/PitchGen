@@ -7,6 +7,7 @@ export function TreatmentLayout({ deck }: { deck: PitchDeckData }) {
   const { hero: h, world_and_engine: w, production: pr } = deck;
   const pal = w.color_palette;
   const f = pr.financials;
+  const hide = new Set<string>(deck.hidden_sections);
 
   return (
     <div className="bg-bg text-fg">
@@ -22,6 +23,7 @@ export function TreatmentLayout({ deck }: { deck: PitchDeckData }) {
           {deck.team.length > 0 && <p className="mt-6 text-sm">{deck.team.map((t) => `${t.name}, ${t.role}`).join(" · ")}</p>}
         </header>
 
+        {!hide.has("World") && (
         <Section id="engine" n="1" title="The world">
           <p>{w.synopsis}</p>
           <h3>The engine</h3>
@@ -39,7 +41,9 @@ export function TreatmentLayout({ deck }: { deck: PitchDeckData }) {
             </div>
           )}
         </Section>
+        )}
 
+        {!hide.has("Casting") && (
         <Section id="casting" n="2" title="Characters">
           {deck.casting.map((c) => (
             <div key={c.character_name} className="mb-6">
@@ -58,7 +62,9 @@ export function TreatmentLayout({ deck }: { deck: PitchDeckData }) {
             </div>
           ))}
         </Section>
+        )}
 
+        {!hide.has("Episodes") && (
         <Section id="episodes" n="3" title="Episodes">
           {deck.episodic_arc.map((e) => (
             <div key={e.episode_number} className="mb-5">
@@ -70,7 +76,9 @@ export function TreatmentLayout({ deck }: { deck: PitchDeckData }) {
             </div>
           ))}
         </Section>
+        )}
 
+        {!hide.has("Production") && (
         <Section id="locations" n="4" title="Production">
           {pr.locations.map((l) => (
             <p key={l.name}>
@@ -83,7 +91,9 @@ export function TreatmentLayout({ deck }: { deck: PitchDeckData }) {
             {f.co_pro_opportunities.length > 0 && ` Co-production: ${f.co_pro_opportunities.join(", ")}.`} {f.existing_attachments_or_funding}
           </p>
         </Section>
+        )}
 
+        {!hide.has("Team") && (
         <Section id="package" n="5" title="Team">
           {deck.team.map((t) => (
             <p key={t.name}>
@@ -96,6 +106,7 @@ export function TreatmentLayout({ deck }: { deck: PitchDeckData }) {
             </p>
           ))}
         </Section>
+        )}
       </article>
     </div>
   );

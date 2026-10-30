@@ -12,14 +12,15 @@ export function DeckView({ deck }: { deck: PitchDeckData }) {
   if (deck.layout === "onepager") return <OnePagerLayout deck={deck} />;
   if (deck.layout === "lookbook") return <LookbookLayout deck={deck} />;
   if (deck.layout === "treatment") return <TreatmentLayout deck={deck} />;
+  const hide = new Set(deck.hidden_sections);
   return (
     <div className="bg-bg text-fg">
       <HeroCover deck={deck} />
-      <WorldAndEngine deck={deck} />
-      <CastingGrid deck={deck} />
-      <LocationsBoard deck={deck} />
-      <Episodes deck={deck} />
-      <PackageFinancials deck={deck} />
+      {!hide.has("World") && <WorldAndEngine deck={deck} />}
+      {!hide.has("Casting") && <CastingGrid deck={deck} />}
+      {!hide.has("Production") && <LocationsBoard deck={deck} />}
+      {!hide.has("Episodes") && <Episodes deck={deck} />}
+      {(!hide.has("Production") || !hide.has("Team")) && <PackageFinancials deck={deck} />}
     </div>
   );
 }
