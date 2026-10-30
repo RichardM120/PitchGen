@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LayoutGrid, Palette, Plus } from "lucide-react";
+import { LayoutGrid, Plus } from "lucide-react";
 import { PitchGenWordmark } from "@/components/brand/Logo";
 import { href } from "@/lib/base";
 
@@ -18,9 +18,6 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
           <Link href="/studio/new" className="inline-flex items-center gap-1.5 hover:text-fg">
             <Plus size={16} /> <span className="hidden sm:inline">Create new</span>
           </Link>
-          <Link href="/design-system" className="inline-flex items-center gap-1.5 hover:text-fg">
-            <Palette size={16} /> <span className="hidden sm:inline">Design system</span>
-          </Link>
         </nav>
         <span className="ml-auto flex items-center gap-4">
           <form method="post" action={href("/api/logout")}>
@@ -29,6 +26,18 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
         </span>
       </header>
       <div className="flex-1">{children}</div>
+      <footer className="no-print flex flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-4 text-xs text-mute md:px-6">
+        <span>PitchGen Studio</span>
+        <span className="flex items-center gap-4">
+          <span className="font-semibold uppercase tracking-wider">Admin</span>
+          <Link href="/design-system" className="hover:text-fg">
+            Design system
+          </Link>
+          <Link href="/" className="hover:text-fg">
+            View as guest
+          </Link>
+        </span>
+      </footer>
     </div>
   );
 }
