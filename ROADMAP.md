@@ -43,6 +43,15 @@ Product: interactive, watermarked HTML pitch portals for UK drama. PitchGen is i
 - [ ] Set ANTHROPIC_API_KEY in Vercel to switch on generation
 - [ ] Mux for HLS streaming and play telemetry (Blob video is progressive download for now)
 
+## Phase 2.1: Light theme and guided flow (30 Oct 2026)
+
+- [x] White, teal, black copy; Sora + Inter; design system v2
+- [x] Passcode-only login straight into the Studio
+- [x] Studio home: hero panel, demo deck, how-it-works, My pitches
+- [x] Demo project with generated stills in `public/demo/the-saltings/` (`tools/make-demo-stills.py`)
+- [x] Four-step wizard: Start, Add material, Refine (editor with per-tab guidance and checklist), Preview and publish
+- [x] Publish flow: drafts are private; viewers only see published decks
+
 ## Phase 3: Telemetry and pilots (weeks 3 to 4)
 
 - [ ] Log section views and tape plays per viewer

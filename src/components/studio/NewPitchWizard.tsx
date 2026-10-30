@@ -1,0 +1,160 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ArrowLeft, ArrowRight, FileText, Loader2, Sparkles } from "lucide-react";
+import { href } from "@/lib/base";
+import { createPitchAction } from "@/app/studio/actions";
+import { Stepper } from "./Stepper";
+
+const FORMATS = ["6 x 60' returnable drama", "8 x 30' comedy", "4 x 60' limited series", "Feature film", "Children's / animation", "Factual / documentary"];
+const GENRES = ["Crime", "Drama", "Comedy", "Thriller", "Family", "Period", "Sci-fi", "Romance", "Horror", "Documentary"];
+
+export function NewPitchWizard({ aiReady, audio, canSave }: { aiReady: boolean; audio: boolean; canSave: boolean }) {
+  const router = useRouter();
+  const [step, setStep] = useState<1 | 2>(1);
+  const [title, setTitle] = useState("");
+  const [format, setFormat] = useState("");
+  const [genres, setGenres] = useState<string[]>([]);
+  const [notes, setNotes] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [busy, setBusy] = useState<"generate" | "blank" | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const canContinue = title.trim().length > 1;
+  const hasMaterial = notes.trim().length > 40 || Boolean(file);
+
+  async function generate() {
+    setBusy("generate");
+    setError(null);
+    const fd = new FormData();
+    fd.set("title", title.trim());
+    fd.set("notes", [format && `Format: ${format}`, genres.length && `Genre: ${genres.join(", ")}`, notes].filter(Boolean).join("\n\n"));
+    if (file) fd.set("file", file);
+    try {
+      const res = await fetch(href("/api/generate"), { method: "POST", body: fd });
+      const json = (await res.json()) as { slug?: string; error?: string };
+      if (!res.ok || !json.slug) throw new Error(json.error ?? `Failed (${res.status})`);
+      router.push(`/studio/${json.slug}?welcome=1`);
+    } catch (e) {
+      setError((e as Error).message);
+      setBusy(null);
+    }
+  }
+
+  async function blank() {
+    setBusy("blank");
+    const fd = new FormData();
+    fd.set("title", title.trim());
+    fd.set("format", format);
+    fd.set("genre", genres.join(","));
+    await createPitchAction(fd);
+  }
+
+  return (
+    <div>
+      <Stepper current={step} />
+      <div className="mt-8" />
+      {step === 1 && (
+        <section>
+          <h1 className="text-3xl md:text-4xl">Step 1: What is the pitch?</h1>
+          <p className="mt-2 text-fg-2">Just the essentials. You can change all of this later.</p>
+
+          <div className="card mt-8 space-y-6 p-6 md:p-8">
+            <div>
+              <label className="label" htmlFor="title">
+                Working title
+              </label>
+              <input id="title" className="field text-lg" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="The Saltings" autoFocus />
+              <p className="hint">This becomes the web address, for example /p/the-saltings.</p>
+            </div>
+
+            <div>
+              <span className="label">Format</span>
+              <div className="flex flex-wrap gap-2">
+                {FORMATS.map((f) => (
+                  <button key={f} type="button" onClick={() => setFormat(f === format ? "" : f)} className={`btn py-1.5 text-sm ${format === f ? "btn-primary" : "btn-ghost"}`}>
+                    {f}
+                  </button>
+                ))}
+              </div>
+              <input className="field mt-2" value={format} onChange={(e) => setFormat(e.target.value)} placeholder="Or type your own, e.g. 3 x 90' event drama" />
+            </div>
+
+            <div>
+              <span className="label">Genre (pick any)</span>
+              <div className="flex flex-wrap gap-2">
+                {GENRES.map((g) => {
+                  const on = genres.includes(g);
+                  return (
+                    <button key={g} type="button" onClick={() => setGenres(on ? genres.filter((x) => x !== g) : [...genres, g])} className={`btn py-1.5 text-sm ${on ? "btn-primary" : "btn-ghost"}`}>
+                      {g}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 flex items-center justify-between">
+            <span className="text-sm text-mute">Next: add your notes or treatment</span>
+            <button className="btn btn-primary" disabled={!canContinue} onClick={() => setStep(2)}>
+              Continue <ArrowRight size={16} />
+            </button>
+          </div>
+        </section>
+      )}
+
+      {step === 2 && (
+        <section>
+          <h1 className="text-3xl md:text-4xl">Step 2: Add your material</h1>
+          <p className="mt-2 text-fg-2">
+            Paste anything you have: a treatment, writer notes, a transcript of a voice memo, casting thoughts. The more detail, the better the first draft. PitchGen writes every section of the deck from it.
+          </p>
+
+          <div className="card mt-8 space-y-6 p-6 md:p-8">
+            <div>
+              <label className="label" htmlFor="notes">
+                Notes, treatment or transcript
+              </label>
+              <textarea id="notes" className="field" rows={14} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder={"Premise and world...\nWho the lead is and what they want...\nThe engine that generates episodes...\nTone and comparables...\nWho is attached, where it shoots, budget thoughts..."} />
+              <p className="hint">{notes.trim().length} characters. A good draft needs a few paragraphs.</p>
+            </div>
+
+            <div>
+              <label className="label" htmlFor="file">
+                Or attach a file
+              </label>
+              <label className="flex cursor-pointer items-center gap-3 rounded-xl border-2 border-dashed border-line px-4 py-4 text-sm hover:border-accent">
+                <FileText size={18} className="text-accent" />
+                <span className="flex-1">{file ? file.name : `PDF treatment${audio ? ", or a voice note (m4a, mp3)" : ""}`}</span>
+                <span className="btn btn-ghost py-1 text-xs">Choose</span>
+                <input id="file" type="file" className="hidden" accept={`.pdf,.txt,.md${audio ? ",audio/*,.m4a,.mp3,.wav" : ""}`} onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+              </label>
+              {!audio && <p className="hint">Voice notes need an OpenAI key in settings. For now, paste the transcript.</p>}
+            </div>
+
+            {!aiReady && <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">AI drafting is off until an Anthropic key is set. You can still create a blank pitch and fill it in yourself.</p>}
+            {error && <p className="text-sm font-medium text-danger">{error}</p>}
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+            <button className="btn btn-ghost" onClick={() => setStep(1)} disabled={busy !== null}>
+              <ArrowLeft size={16} /> Back
+            </button>
+            <div className="flex flex-wrap gap-3">
+              <button className="btn btn-ghost" onClick={blank} disabled={!canSave || busy !== null}>
+                {busy === "blank" ? <Loader2 size={16} className="animate-spin" /> : null} Skip, start blank
+              </button>
+              <button className="btn btn-primary" onClick={generate} disabled={!aiReady || !hasMaterial || busy !== null}>
+                {busy === "generate" ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+                {busy === "generate" ? "Drafting your deck, 30 to 60 seconds" : "Draft the deck"}
+              </button>
+            </div>
+          </div>
+          <p className="mt-3 text-right text-sm text-mute">Next: refine each section in the editor</p>
+        </section>
+      )}
+    </div>
+  );
+}

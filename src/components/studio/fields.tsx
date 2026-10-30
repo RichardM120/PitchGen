@@ -5,6 +5,7 @@ import { upload } from "@vercel/blob/client";
 import { Loader2, Plus, Trash2, Upload, X } from "lucide-react";
 import { useId, useState } from "react";
 import { href } from "@/lib/base";
+import { resolveMedia } from "@/components/ui/Media";
 
 export function Text({
   label,
@@ -28,7 +29,7 @@ export function Text({
         {label}
       </label>
       <input id={id} type={type} className="field" value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
-      {hint && <p className="mt-1 text-[11px] text-mute">{hint}</p>}
+      {hint && <p className="hint">{hint}</p>}
     </div>
   );
 }
@@ -41,7 +42,7 @@ export function Area({ label, value, onChange, rows = 4, hint }: { label: string
         {label}
       </label>
       <textarea id={id} className="field" rows={rows} value={value} onChange={(e) => onChange(e.target.value)} />
-      {hint && <p className="mt-1 text-[11px] text-mute">{hint}</p>}
+      {hint && <p className="hint">{hint}</p>}
     </div>
   );
 }
@@ -101,7 +102,7 @@ export function Palette({ value, onChange }: { value: string[]; onChange: (v: st
       <span className="label">Colour palette (dark to light)</span>
       <div className="flex gap-2">
         {colours.map((c, i) => (
-          <label key={i} className="relative h-10 w-full cursor-pointer overflow-hidden rounded-md border border-line" style={{ background: c }}>
+          <label key={i} className="relative h-10 w-full cursor-pointer overflow-hidden rounded-lg border border-line" style={{ background: c }}>
             <input
               type="color"
               value={c}
@@ -147,7 +148,7 @@ export function MediaField({ label, value, onChange, kind = "image", hint }: { l
         {label}
       </label>
       <div className="flex flex-col items-start gap-3 sm:flex-row">
-        {kind === "image" && value && <img src={value} alt="" className="h-14 w-20 shrink-0 rounded object-cover" />}
+        {kind === "image" && value && <img src={resolveMedia(value)} alt="" className="h-14 w-20 shrink-0 rounded-lg object-cover" />}
         <div className="w-full flex-1">
           <div className="flex gap-2">
             <input id={id} className="field" value={value} placeholder={kind === "image" ? "https://... or upload" : "https://... (Vimeo, Dropbox) or upload"} onChange={(e) => onChange(e.target.value)} />
@@ -161,7 +162,7 @@ export function MediaField({ label, value, onChange, kind = "image", hint }: { l
               </button>
             )}
           </div>
-          <p className="mt-1 text-[11px] text-mute">{err ?? hint ?? (kind === "image" ? "JPG, PNG or WebP up to 25MB" : "MP4 or MOV up to 500MB, or paste a link")}</p>
+          <p className={`hint ${err ? "text-danger" : ""}`}>{err ?? hint ?? (kind === "image" ? "JPG, PNG or WebP up to 25MB" : "MP4 or MOV up to 500MB, or paste a link")}</p>
         </div>
       </div>
     </div>
@@ -195,7 +196,7 @@ export function Repeater<T>({
       <div className="space-y-3">
         {items.map((item, i) => (
           <details key={i} className="card group" open={items.length <= 3}>
-            <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm">
+            <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold">
               <span className="font-medium">{title(item, i) || `Item ${i + 1}`}</span>
               <span className="flex items-center gap-2 text-mute">
                 <button type="button" className="hover:text-danger" title="Remove" onClick={(e) => { e.preventDefault(); onChange(items.filter((_, j) => j !== i)); }}>
@@ -208,7 +209,7 @@ export function Repeater<T>({
             </div>
           </details>
         ))}
-        {items.length === 0 && <p className="text-xs text-mute">Nothing yet. Add one above.</p>}
+        {items.length === 0 && <p className="rounded-xl border-2 border-dashed border-line px-4 py-6 text-center text-sm text-mute">Nothing here yet. Use Add to create the first one.</p>}
       </div>
     </div>
   );

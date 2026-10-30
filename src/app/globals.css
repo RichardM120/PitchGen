@@ -1,9 +1,8 @@
 @import "tailwindcss";
 
-/* PitchGen design system, v1. Blue teal on deep ink.
+/* PitchGen design system v2. White, teal, black copy.
    Source of truth: design-system/tokens.json. Keep the two in sync. */
 :root {
-  /* Teal scale */
   --teal-950: #04171c;
   --teal-900: #072a32;
   --teal-800: #0b3c47;
@@ -14,22 +13,23 @@
   --teal-300: #6fd0da;
   --teal-200: #b4e6eb;
   --teal-100: #e3f5f7;
+  --teal-50: #f2fafb;
 
-  /* Semantic */
-  --ink: var(--teal-950);
-  --ink-2: #082129;
-  --ink-3: #0d303a;
-  --paper: #eef6f7;
-  --mute: #8fa9af;
-  --line: rgba(238, 246, 247, 0.12);
-  --accent: var(--teal-400);
-  --accent-strong: var(--teal-500);
-  --ok: #4cbf8a;
-  --warn: #e0a458;
-  --danger: #e2695e;
+  --bg: #ffffff;
+  --surface: #f5f8f9;
+  --surface-2: #e9f0f2;
+  --fg: #0b1215;
+  --fg-2: #2a3539;
+  --mute: #5b6b70;
+  --line: rgba(11, 18, 21, 0.12);
+  --accent: var(--teal-600);
+  --accent-strong: var(--teal-700);
+  --accent-soft: var(--teal-100);
+  --ok: #1f8a5b;
+  --warn: #a85f0a;
+  --danger: #c2362b;
 
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-body: "Montserrat Variable", system-ui, sans-serif;
+  --gap: var(--bg);
 }
 
 @theme inline {
@@ -43,20 +43,23 @@
   --color-teal-300: var(--teal-300);
   --color-teal-200: var(--teal-200);
   --color-teal-100: var(--teal-100);
-  --color-ink: var(--ink);
-  --color-ink-2: var(--ink-2);
-  --color-ink-3: var(--ink-3);
-  --color-paper: var(--paper);
+  --color-teal-50: var(--teal-50);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
   --color-mute: var(--mute);
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
   --color-ok: var(--ok);
   --color-warn: var(--warn);
   --color-danger: var(--danger);
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Montserrat Variable", system-ui, sans-serif;
-  --radius-pg: 10px;
+  --font-display: "Sora Variable", system-ui, sans-serif;
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --radius-pg: 12px;
 }
 
 html {
@@ -65,117 +68,150 @@ html {
 }
 
 body {
-  background: var(--ink);
-  color: var(--paper);
-  font-size: 15px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-weight: 700;
 }
 
 @layer components {
-.eyebrow {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--mute);
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .field {
+    width: 100%;
+    border: 1.5px solid var(--line);
+    background: var(--bg);
+    color: var(--fg);
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    transition: border-color 120ms, box-shadow 120ms;
+  }
+  .field:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(19, 112, 127, 0.15);
+  }
+  .field::placeholder {
+    color: #8a979b;
+  }
+  textarea.field {
+    min-height: 5.5rem;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  .label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--fg-2);
+    margin-bottom: 0.35rem;
+  }
+  .hint {
+    font-size: 0.78rem;
+    color: var(--mute);
+    margin-top: 0.3rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 120ms, color 120ms, border-color 120ms, transform 80ms;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-primary {
+    background: var(--accent-strong);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--teal-800);
+  }
+  .btn-ghost {
+    border: 1.5px solid var(--line);
+    color: var(--fg);
+    background: var(--bg);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent-strong);
+  }
+  .btn-soft {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+  }
+  .btn-soft:hover {
+    background: var(--teal-200);
+  }
+  .btn-danger {
+    border: 1.5px solid rgba(194, 54, 43, 0.35);
+    color: var(--danger);
+    background: var(--bg);
+  }
+  .btn-danger:hover {
+    background: rgba(194, 54, 43, 0.08);
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .card {
+    border: 1px solid var(--line);
+    background: var(--bg);
+    border-radius: var(--radius-pg);
+  }
+  .panel {
+    background: var(--surface);
+    border-radius: var(--radius-pg);
+  }
+  .step-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: var(--accent-strong);
+    color: #fff;
+    flex: none;
+  }
+  .step-dot.muted {
+    background: var(--surface-2);
+    color: var(--mute);
+  }
 }
 
-.grain {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 3px 3px;
-}
-
-.glow {
-  background:
-    radial-gradient(60% 50% at 20% 0%, rgba(47, 179, 194, 0.18), transparent 60%),
-    radial-gradient(40% 40% at 90% 100%, rgba(23, 142, 158, 0.14), transparent 60%);
-}
-
-/* Form controls */
-.field {
-  width: 100%;
-  border: 1px solid var(--line);
-  background: var(--ink);
-  color: var(--paper);
-  padding: 0.55rem 0.75rem;
-  border-radius: 8px;
-  outline: none;
-  transition: border-color 120ms;
-}
-.field:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(47, 179, 194, 0.18);
-}
-.field::placeholder {
-  color: rgba(143, 169, 175, 0.6);
-}
-textarea.field {
-  min-height: 5.5rem;
-  resize: vertical;
-  line-height: 1.5;
-}
-.label {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--mute);
-  margin-bottom: 0.3rem;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  border-radius: 999px;
-  padding: 0.55rem 1.1rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  transition: background 120ms, color 120ms, border-color 120ms;
-  white-space: nowrap;
-}
-.btn-primary {
-  background: var(--accent);
-  color: var(--teal-950);
-}
-.btn-primary:hover {
-  background: var(--teal-300);
-}
-.btn-ghost {
-  border: 1px solid var(--line);
-  color: var(--paper);
-}
-.btn-ghost:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.btn-danger {
-  border: 1px solid rgba(226, 105, 94, 0.4);
-  color: var(--danger);
-}
-.btn-danger:hover {
-  background: rgba(226, 105, 94, 0.12);
-}
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.card {
-  border: 1px solid var(--line);
-  background: var(--ink-2);
-  border-radius: var(--radius-pg);
-}
+/* Deck pages: the cinematic sections sit on white with dark imagery. */
+.deck-hero-overlay {
+  background: linear-gradient(to top, rgba(4, 23, 28, 0.92) 0%, rgba(4, 23, 28, 0.45) 45%, rgba(4, 23, 28, 0) 100%);
 }
 
 @media print {
   @page {
     size: A4 landscape;
     margin: 12mm;
-  }
-  body {
-    background: #fff;
-    color: #111;
   }
   .no-print {
     display: none !important;

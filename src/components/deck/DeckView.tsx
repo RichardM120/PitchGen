@@ -5,7 +5,7 @@ import { CastingGrid, Episodes, HeroCover, LocationsBoard, PackageFinancials, Wo
 // live preview, so both always render identically.
 export function DeckView({ deck }: { deck: PitchDeckData }) {
   return (
-    <div style={{ ["--accent" as string]: deck.world_and_engine.color_palette[2] ?? "#2fb3c2" }}>
+    <div className="bg-bg text-fg">
       <HeroCover deck={deck} />
       <WorldAndEngine deck={deck} />
       <CastingGrid deck={deck} />

@@ -32,11 +32,16 @@ export async function savePitchAction(data: unknown): Promise<SaveResult> {
 export async function createPitchAction(formData: FormData): Promise<void> {
   await requireAdmin();
   const title = String(formData.get("title") ?? "").trim() || "Untitled";
+  const format = String(formData.get("format") ?? "").trim();
+  const genre = String(formData.get("genre") ?? "").split(",").map((g) => g.trim()).filter(Boolean);
   let slug = slugify(title) || `pitch-${Date.now().toString(36)}`;
   if (await getPitch(slug)) slug = `${slug}-${Date.now().toString(36).slice(-4)}`;
-  await savePitch(newPitchSkeleton(title, slug));
+  const deck = newPitchSkeleton(title, slug);
+  deck.hero.format = format;
+  deck.hero.genre = genre;
+  await savePitch(deck);
   revalidatePath("/");
-  redirect(`/studio/${slug}`);
+  redirect(`/studio/${slug}?welcome=1`);
 }
 
 export async function duplicatePitchAction(formData: FormData): Promise<void> {
@@ -45,7 +50,7 @@ export async function duplicatePitchAction(formData: FormData): Promise<void> {
   const src = await getPitch(from);
   if (!src) return;
   const slug = `${from}-copy-${Date.now().toString(36).slice(-4)}`;
-  await savePitch({ ...src, slug, project_id: `pg-${Date.now().toString(36)}`, status: "draft", hero: { ...src.hero, title: `${src.hero.title} (copy)` } });
+  await savePitch({ ...src, slug, is_demo: false, project_id: `pg-${Date.now().toString(36)}`, status: "draft", hero: { ...src.hero, title: `${src.hero.title} (copy)` } });
   revalidatePath("/");
   redirect(`/studio/${slug}`);
 }
@@ -55,4 +60,11 @@ export async function deletePitchAction(formData: FormData): Promise<void> {
   await deletePitch(String(formData.get("slug") ?? ""));
   revalidatePath("/");
   redirect("/studio");
+}
+
+export async function publishPitchAction(slug: string, status: "draft" | "in_review" | "published"): Promise<SaveResult> {
+  await requireAdmin();
+  const deck = await getPitch(slug);
+  if (!deck) return { ok: false, errors: ["Pitch not found"] };
+  return savePitchAction({ ...deck, status });
 }

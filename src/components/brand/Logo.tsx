@@ -1,18 +1,10 @@
 // PitchGen brand mark: the slate in the frame. A clapperboard held inside the
-// corner brackets of a cinema frame, in a single colour (currentColor), no
-// tile, no gradient. Set the colour on the parent. design-system/tokens.json
-// has the rationale and the app icon variant.
+// corner brackets of a cinema frame, in one colour (currentColor). The clapper
+// stripes are cut from the background via --gap (set in globals.css).
 
 export function PitchGenMark({ size = 28, className = "" }: { size?: number; className?: string }) {
   return (
-    <svg
-      width={size}
-      height={Math.round(size * (40 / 48))}
-      viewBox="8 12 48 40"
-      aria-hidden="true"
-      className={className}
-      style={{ ["--gap" as string]: "var(--ink, #04171c)" }}
-    >
+    <svg width={size} height={Math.round(size * (40 / 48))} viewBox="8 12 48 40" aria-hidden="true" className={className}>
       <path
         d="M12 23 v-7 h7 M45 16 h7 v7 M12 41 v7 h7 M45 48 h7 v-7"
         fill="none"
@@ -34,7 +26,7 @@ export function PitchGenWordmark({ size = 28 }: { size?: number }) {
   return (
     <span className="inline-flex items-center gap-2.5">
       <PitchGenMark size={size} />
-      <span className="font-sans font-semibold tracking-tight" style={{ fontSize: size * 0.72 }}>
+      <span className="font-display font-bold tracking-tight" style={{ fontSize: size * 0.72 }}>
         PitchGen
       </span>
     </span>

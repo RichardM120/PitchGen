@@ -8,7 +8,9 @@ const MediaUrl = z.string().optional().default("");
 export const PitchDeckSchema = z.object({
   project_id: z.string(),
   slug: z.string().regex(/^[a-z0-9-]+$/),
-  status: z.enum(["draft", "in_review", "sent"]).default("draft"),
+  // draft: only in the Studio. in_review: shared for notes. published: live for viewers.
+  status: z.preprocess((v) => (v === "sent" ? "published" : v), z.enum(["draft", "in_review", "published"])).default("draft"),
+  is_demo: z.boolean().optional().default(false),
   security: z.object({
     is_password_protected: z.boolean().default(true),
     // Optional deck-specific passcode for a commissioner. The shared studio
