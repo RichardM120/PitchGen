@@ -1,11 +1,11 @@
 {
   "project_id": "pg-sadie-0001",
   "slug": "sadie-lookbook",
-  "status": "published",
+  "status": "draft",
   "is_demo": false,
   "layout": "lookbook",
   "security": {
-    "is_password_protected": false,
+    "is_password_protected": true,
     "passcode": "",
     "watermark_recipient": ""
   },
@@ -41,23 +41,13 @@
         "aspect_ratio": "16:9"
       },
       {
-        "url": "demo/sadie/sadie-1.jpg",
-        "caption": "Sadie, fifty, Scottish, as she is. The reality the storybook never showed.",
+        "url": "demo/sadie/barn-wide.jpg",
+        "caption": "The working farm. Shed, straw, cattle and a long way from the book.",
         "aspect_ratio": "16:9"
       },
       {
         "url": "demo/sadie/sadie-cattle.jpg",
-        "caption": "Shed, straw and cattle. Sadie learns the farm one animal at a time.",
-        "aspect_ratio": "16:9"
-      },
-      {
-        "url": "demo/sadie/storybook-2.jpg",
-        "caption": "Young Sadie and the farm dog. The idyll she was named after.",
-        "aspect_ratio": "16:9"
-      },
-      {
-        "url": "demo/sadie/sadie-3.jpg",
-        "caption": "Funny with a melancholy undertone, tough but vulnerable.",
+        "caption": "Sadie learns the farm one animal at a time.",
         "aspect_ratio": "16:9"
       },
       {
@@ -66,8 +56,13 @@
         "aspect_ratio": "16:9"
       },
       {
-        "url": "demo/sadie/sadie-2.jpg",
-        "caption": "World weary but optimistic, warm but grounded.",
+        "url": "demo/sadie/storybook-2.jpg",
+        "caption": "Young Sadie and the farm dog. The idyll she was named after.",
+        "aspect_ratio": "16:9"
+      },
+      {
+        "url": "demo/sadie/barn-interior.jpg",
+        "caption": "Light through the slats. The farm as a character.",
         "aspect_ratio": "16:9"
       }
     ]
@@ -297,81 +292,74 @@
     {
       "url": "demo/sadie/hero.jpg",
       "kind": "image",
-      "name": "Hero: storybook and reality",
+      "name": "Hero: storybook Sadie",
       "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
+      "added_at": "2026-11-02T14:05:00.000Z"
     },
     {
       "url": "demo/sadie/storybook.jpg",
       "kind": "image",
-      "name": "Storybook Sadie",
+      "name": "Storybook Sadie and dog",
       "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
+      "added_at": "2026-11-02T14:05:00.000Z"
     },
     {
       "url": "demo/sadie/storybook-2.jpg",
       "kind": "image",
-      "name": "Storybook Sadie and dog",
+      "name": "Storybook, dog and dress",
       "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
+      "added_at": "2026-11-02T14:05:00.000Z"
     },
     {
-      "url": "demo/sadie/sadie-1.jpg",
+      "url": "demo/sadie/barn-wide.jpg",
       "kind": "image",
-      "name": "Sadie to camera",
+      "name": "Barn, wide",
       "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
+      "added_at": "2026-11-02T14:05:00.000Z"
     },
     {
-      "url": "demo/sadie/sadie-2.jpg",
+      "url": "demo/sadie/barn-interior.jpg",
       "kind": "image",
-      "name": "Sadie, close",
+      "name": "Barn interior",
       "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
-    },
-    {
-      "url": "demo/sadie/sadie-3.jpg",
-      "kind": "image",
-      "name": "Sadie, smiling",
-      "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
+      "added_at": "2026-11-02T14:05:00.000Z"
     },
     {
       "url": "demo/sadie/sadie-cattle.jpg",
       "kind": "image",
       "name": "Sadie with cattle",
       "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
-    },
-    {
-      "url": "demo/sadie/sadie-headshot.jpg",
-      "kind": "image",
-      "name": "Sadie headshot",
-      "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
+      "added_at": "2026-11-02T14:05:00.000Z"
     },
     {
       "url": "demo/sadie/field.jpg",
       "kind": "image",
-      "name": "Field",
+      "name": "Field with sheep",
       "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
+      "added_at": "2026-11-02T14:05:00.000Z"
     },
     {
       "url": "demo/sadie/barn.jpg",
       "kind": "image",
-      "name": "Barn",
+      "name": "Barn and cattle",
       "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
+      "added_at": "2026-11-02T14:05:00.000Z"
+    },
+    {
+      "url": "demo/sadie/sadie-headshot.jpg",
+      "kind": "image",
+      "name": "Sadie, head and shoulders",
+      "credit": "",
+      "added_at": "2026-11-02T14:05:00.000Z"
     },
     {
       "url": "demo/sadie/sadie-monologue.mp4",
       "kind": "video",
       "name": "Sadie monologue (16:9)",
       "credit": "",
-      "added_at": "2026-11-02T13:30:00.000Z"
+      "added_at": "2026-11-02T14:05:00.000Z"
     }
   ],
   "hidden_sections": [],
-  "updated_at": "2026-11-02T13:30:00.000Z"
+  "updated_at": "2026-11-02T14:05:00.000Z"
 }
