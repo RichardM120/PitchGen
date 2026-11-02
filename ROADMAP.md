@@ -104,7 +104,8 @@ Done: the `pitchgen` project's Deployment Protection is off for production (the 
 - Model names in the blueprint (Claude 3.7 Sonnet, Gemini 2.5) are out of date; pick current models at Phase 2.
 
 ## 2 Nov 2026
-- Sadie lookbook shipped as a bundled deck (`data/pitches/sadie.json`, slug `sadie-lookbook`), public link, stills and 540p monologue in `public/demo/sadie/`.
+- Sadie lookbook shipped as a bundled deck (`data/pitches/sadie.json`, slug `sadie-lookbook`), public link, 16:9 stills and a 16:9 monologue reel in `public/demo/sadie/`.
+- Lookbook layout rebuilt as a page-turning book: one 16:9 page at a time, arrows and keys, prints one page per sheet.
 - Fix: static media in /public no longer sits behind the login, so public links render their images.
 - New: `GET/PUT /api/pitches/<slug>` admin JSON endpoint for scripts and the extension.
 - Note: a draft with slug `sadie` appears to exist in the Studio slate; delete it there if it was a failed upload.

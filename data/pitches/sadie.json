@@ -38,32 +38,37 @@
       {
         "url": "demo/sadie/storybook.jpg",
         "caption": "The recurring motif: animated illustrations from the Sonsie Farm books, warm and nostalgic, until reality intrudes.",
-        "aspect_ratio": "2.39:1"
+        "aspect_ratio": "16:9"
       },
       {
-        "url": "demo/sadie/sadie-2.jpg",
+        "url": "demo/sadie/sadie-1.jpg",
         "caption": "Sadie, fifty, Scottish, as she is. The reality the storybook never showed.",
-        "aspect_ratio": "4:3"
+        "aspect_ratio": "16:9"
       },
       {
         "url": "demo/sadie/sadie-cattle.jpg",
         "caption": "Shed, straw and cattle. Sadie learns the farm one animal at a time.",
-        "aspect_ratio": "4:3"
+        "aspect_ratio": "16:9"
       },
       {
-        "url": "demo/sadie/sadie-1.jpg",
-        "caption": "A woman at a turning point, talking straight to camera.",
-        "aspect_ratio": "4:3"
+        "url": "demo/sadie/storybook-2.jpg",
+        "caption": "Young Sadie and the farm dog. The idyll she was named after.",
+        "aspect_ratio": "16:9"
       },
       {
         "url": "demo/sadie/sadie-3.jpg",
-        "caption": "Honest, unvarnished, funny. The register of the whole show.",
-        "aspect_ratio": "4:3"
+        "caption": "Funny with a melancholy undertone, tough but vulnerable.",
+        "aspect_ratio": "16:9"
       },
       {
         "url": "demo/sadie/field.jpg",
         "caption": "Open ground, sheep and weather. Brutal and beautiful at the same time.",
-        "aspect_ratio": "2.39:1"
+        "aspect_ratio": "16:9"
+      },
+      {
+        "url": "demo/sadie/sadie-2.jpg",
+        "caption": "World weary but optimistic, warm but grounded.",
+        "aspect_ratio": "16:9"
       }
     ]
   },
@@ -201,7 +206,7 @@
         "name": "The harbour town",
         "region": "Scottish coast",
         "visual_rationale": "A small fishing harbour with a pub and a few shops. Where the town stares, and where Callum picks the most remote bench.",
-        "image_url": ""
+        "image_url": "demo/sadie/field.jpg"
       },
       {
         "name": "Glasgow",
@@ -294,72 +299,79 @@
       "kind": "image",
       "name": "Hero: storybook and reality",
       "credit": "",
-      "added_at": "2026-11-02T13:00:00.000Z"
+      "added_at": "2026-11-02T13:30:00.000Z"
     },
     {
       "url": "demo/sadie/storybook.jpg",
       "kind": "image",
       "name": "Storybook Sadie",
-      "credit": "Sizzle frame",
-      "added_at": "2026-11-02T13:00:00.000Z"
+      "credit": "",
+      "added_at": "2026-11-02T13:30:00.000Z"
+    },
+    {
+      "url": "demo/sadie/storybook-2.jpg",
+      "kind": "image",
+      "name": "Storybook Sadie and dog",
+      "credit": "",
+      "added_at": "2026-11-02T13:30:00.000Z"
     },
     {
       "url": "demo/sadie/sadie-1.jpg",
       "kind": "image",
-      "name": "Sadie to camera 1",
-      "credit": "Sizzle frame",
-      "added_at": "2026-11-02T13:00:00.000Z"
+      "name": "Sadie to camera",
+      "credit": "",
+      "added_at": "2026-11-02T13:30:00.000Z"
     },
     {
       "url": "demo/sadie/sadie-2.jpg",
       "kind": "image",
-      "name": "Sadie to camera 2",
-      "credit": "Sizzle frame",
-      "added_at": "2026-11-02T13:00:00.000Z"
+      "name": "Sadie, close",
+      "credit": "",
+      "added_at": "2026-11-02T13:30:00.000Z"
     },
     {
       "url": "demo/sadie/sadie-3.jpg",
       "kind": "image",
-      "name": "Sadie to camera 3",
-      "credit": "Sizzle frame",
-      "added_at": "2026-11-02T13:00:00.000Z"
+      "name": "Sadie, smiling",
+      "credit": "",
+      "added_at": "2026-11-02T13:30:00.000Z"
     },
     {
       "url": "demo/sadie/sadie-cattle.jpg",
       "kind": "image",
       "name": "Sadie with cattle",
-      "credit": "From the pitch document",
-      "added_at": "2026-11-02T13:00:00.000Z"
+      "credit": "",
+      "added_at": "2026-11-02T13:30:00.000Z"
     },
     {
       "url": "demo/sadie/sadie-headshot.jpg",
       "kind": "image",
       "name": "Sadie headshot",
-      "credit": "From the pitch document",
-      "added_at": "2026-11-02T13:00:00.000Z"
+      "credit": "",
+      "added_at": "2026-11-02T13:30:00.000Z"
     },
     {
       "url": "demo/sadie/field.jpg",
       "kind": "image",
       "name": "Field",
-      "credit": "From the pitch document",
-      "added_at": "2026-11-02T13:00:00.000Z"
+      "credit": "",
+      "added_at": "2026-11-02T13:30:00.000Z"
     },
     {
       "url": "demo/sadie/barn.jpg",
       "kind": "image",
       "name": "Barn",
-      "credit": "From the pitch document",
-      "added_at": "2026-11-02T13:00:00.000Z"
+      "credit": "",
+      "added_at": "2026-11-02T13:30:00.000Z"
     },
     {
       "url": "demo/sadie/sadie-monologue.mp4",
       "kind": "video",
-      "name": "Sadie monologue (sizzle)",
+      "name": "Sadie monologue (16:9)",
       "credit": "",
-      "added_at": "2026-11-02T13:00:00.000Z"
+      "added_at": "2026-11-02T13:30:00.000Z"
     }
   ],
   "hidden_sections": [],
-  "updated_at": "2026-11-02T13:00:00.000Z"
+  "updated_at": "2026-11-02T13:30:00.000Z"
 }

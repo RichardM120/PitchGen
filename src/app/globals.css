@@ -274,3 +274,53 @@ h1, h2, h3, .display {
     page-break-after: always;
   }
 }
+
+/* Lookbook: one 16:9 page at a time, turned like a book. */
+.book-frame {
+  container-type: inline-size;
+  perspective: 2600px;
+}
+.book-page {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  transform-origin: left center;
+}
+.book-page-print {
+  container-type: inline-size;
+}
+.book-turn {
+  background: transparent;
+  outline: none;
+}
+.book-turn:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--color-accent);
+}
+@keyframes book-out {
+  from { transform: rotateY(0deg); opacity: 1; }
+  to { transform: rotateY(-78deg); opacity: 0; }
+}
+@keyframes book-in {
+  from { transform: translateX(3%); opacity: 0.4; filter: brightness(0.85); }
+  to { transform: translateX(0); opacity: 1; filter: brightness(1); }
+}
+@keyframes book-out-back {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(3%); opacity: 0; }
+}
+@keyframes book-in-back {
+  from { transform: rotateY(-78deg); opacity: 0; }
+  to { transform: rotateY(0deg); opacity: 1; }
+}
+.book-out { animation: book-out 0.55s cubic-bezier(0.4, 0, 0.6, 1) forwards; z-index: 2; box-shadow: 12px 0 40px rgba(0, 0, 0, 0.35); }
+.book-in { animation: book-in 0.55s ease-out; }
+.book-out-back { animation: book-out-back 0.45s ease-in forwards; }
+.book-in-back { animation: book-in-back 0.55s cubic-bezier(0.4, 0, 0.6, 1); z-index: 2; box-shadow: 12px 0 40px rgba(0, 0, 0, 0.35); }
+@media (prefers-reduced-motion: reduce) {
+  .book-out, .book-in, .book-out-back, .book-in-back { animation: none; }
+  .book-out, .book-out-back { display: none; }
+}
+@media print {
+  .book-print { display: block !important; }
+  .book-page-print { break-after: page; width: 100%; }
+}
