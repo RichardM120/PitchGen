@@ -36,7 +36,7 @@ export function VideoButton({ src, label }: { src?: string; label: string }) {
             <X size={18} />
           </button>
         </div>
-        {open && <video src={url} controls autoPlay playsInline controlsList="nodownload" className="aspect-video w-full bg-black" />}
+        {open && <video src={url} controls autoPlay playsInline controlsList="nodownload" className="mx-auto max-h-[82vh] w-full bg-black object-contain" />}
       </dialog>
     </>
   );

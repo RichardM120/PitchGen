@@ -1,0 +1,365 @@
+{
+  "project_id": "pg-sadie-0001",
+  "slug": "sadie",
+  "status": "published",
+  "is_demo": false,
+  "layout": "lookbook",
+  "security": {
+    "is_password_protected": false,
+    "passcode": "",
+    "watermark_recipient": ""
+  },
+  "hero": {
+    "title": "Sadie",
+    "format": "Returning drama series, 6 x 60' proposed",
+    "genre": [
+      "Drama",
+      "Comedy drama",
+      "Rural",
+      "Family"
+    ],
+    "comparables": "Motherland meets All Creatures Great and Small, with the authenticity of Clarkson's Farm",
+    "logline": "When Sadie leaves the city in search of a more fulfilling future she soon learns her idealised, romantic vision is a long way from the beautiful but brutal reality of modern farming. Can she make a success of the business, rebuild a relationship with her teenage daughter, and maybe even find the one thing she definitely wasn't expecting: love?",
+    "hero_image_url": "demo/sadie/hero.jpg",
+    "sizzle_video_url": "demo/sadie/sadie-monologue.mp4"
+  },
+  "world_and_engine": {
+    "synopsis": "Sadie, a Glasgow teacher turning fifty, steps between two fifteen-year-olds with knives and walks away shaken and certain she has more to offer. Named after the heroine of a beloved series of children's books about Sonsie Farm, she buys a remote Scottish farm on the strength of a childhood dream and drags her sixteen-year-old daughter Zoe with her. What she finds is a tarpaulin over the roof, a sheep in the bedroom, a taciturn farmhand called Hamish, a handsome vet with a dark rumour attached, and neighbours who want her to fail.",
+    "the_engine": "Brutal and beautiful. Each episode sets the storybook farm of Sadie's childhood against the working farm she now owns: forty sheep, twelve hens, six pigs, four dogs, and every one of them has to earn its place. Animated illustrations from the books open each episode; reality intrudes within seconds. The farm's survival, the mother and daughter at its heart, and two very different men give the series a clock, a conflict and a question it can carry for several seasons.",
+    "why_now": "Clarkson's Farm pulls in nearly 4.4 million viewers a week, This Farming Life over 3 million and Countryfile 5 to 6 million an episode. The audience for authentic farming is proven; scripted drama has not met it. Sadie pairs that grounded realism with a lead we rarely see: a Scottish woman of fifty, no hair dye, no botox, just her, taking control of her life while her daughter pushes her away. The series also shows a modern rural community as it is: a mixed race teenager, a young gay man, a trans woman, and a town that is not always as accepting as it looks.",
+    "color_palette": [
+      "#1F2A1E",
+      "#4A5D3A",
+      "#8C6B3F",
+      "#C9A96A",
+      "#E9E4D6"
+    ],
+    "mood_stills": [
+      {
+        "url": "demo/sadie/storybook.jpg",
+        "caption": "The recurring motif: animated illustrations from the Sonsie Farm books, warm and nostalgic, until reality intrudes.",
+        "aspect_ratio": "2.39:1"
+      },
+      {
+        "url": "demo/sadie/sadie-2.jpg",
+        "caption": "Sadie, fifty, Scottish, as she is. The reality the storybook never showed.",
+        "aspect_ratio": "4:3"
+      },
+      {
+        "url": "demo/sadie/sadie-cattle.jpg",
+        "caption": "Shed, straw and cattle. Sadie learns the farm one animal at a time.",
+        "aspect_ratio": "4:3"
+      },
+      {
+        "url": "demo/sadie/sadie-1.jpg",
+        "caption": "A woman at a turning point, talking straight to camera.",
+        "aspect_ratio": "4:3"
+      },
+      {
+        "url": "demo/sadie/sadie-3.jpg",
+        "caption": "Honest, unvarnished, funny. The register of the whole show.",
+        "aspect_ratio": "4:3"
+      },
+      {
+        "url": "demo/sadie/field.jpg",
+        "caption": "Open ground, sheep and weather. Brutal and beautiful at the same time.",
+        "aspect_ratio": "2.39:1"
+      }
+    ]
+  },
+  "casting": [
+    {
+      "character_name": "Sadie",
+      "age_range": "48 to 52",
+      "archetype": "The late bloomer who risks everything",
+      "character_bio": "Glasgow secondary school teacher, single, named after the heroine of a children's book. Funny with a melancholy undertone, tough but vulnerable, world weary but optimistic. Stalled and marginalised, she buys a farm she cannot run and stakes her daughter's happiness on a childhood dream.",
+      "casting_notes": "Scottish, fifty, no hair dye, no botox. Dry wit and real warmth; must carry the to-camera honesty of the monologue and the physical comedy of a sheep in the bedroom. Created with Dawn Steele in the role.",
+      "actor_wishlist": [
+        {
+          "name": "Dawn Steele",
+          "headshot_url": "demo/sadie/sadie-headshot.jpg",
+          "credits_note": "Co-creator. Shetland (Stella Quinn, series 8), Monarch of the Glen, Holby City"
+        }
+      ],
+      "audition_or_reel_url": "demo/sadie/sadie-monologue.mp4"
+    },
+    {
+      "character_name": "Zoe",
+      "age_range": "16",
+      "archetype": "The teenager dragged along",
+      "character_bio": "Sadie's daughter, mixed race, sharp, keen to prove her ally credentials and quick to be seduced by the neighbours' money. Sitting her exams in a few months; if she is not happy by then she can move in with her dad.",
+      "casting_notes": "The mother and daughter two-hander is the spine of the show. Needs an actor who can be cruel and loving in the same breath. Teenage years shown as they really are.",
+      "actor_wishlist": [
+        {
+          "name": "Wishlist A (TBC)",
+          "headshot_url": "",
+          "credits_note": ""
+        }
+      ],
+      "audition_or_reel_url": ""
+    },
+    {
+      "character_name": "Hamish",
+      "age_range": "40 to 50",
+      "archetype": "The rugged, taciturn farmhand",
+      "character_bio": "Climbs in through a bedroom window to drag a sheep out. Brusque, principled, loyal to Gilbert, the old owner now in a care home. Believes in quality, authenticity and animal welfare and has watched that abandoned once already.",
+      "casting_notes": "Few words, big presence. Must be funny without trying and devastating with Malkie at the end. The slow-burn spark with Sadie has to be earned.",
+      "actor_wishlist": [
+        {
+          "name": "Wishlist B (TBC)",
+          "headshot_url": "",
+          "credits_note": ""
+        }
+      ],
+      "audition_or_reel_url": ""
+    },
+    {
+      "character_name": "Callum",
+      "age_range": "40 to 50",
+      "archetype": "The ridiculously handsome vet",
+      "character_bio": "First seen gazing out to sea like a brooding Byronic hero. Compassionate and skilled, a good listener, and the man half the town believes murdered his wife. His version: she died by suicide.",
+      "casting_notes": "Charm with a shadow. The audience has to want him and doubt him at the same time.",
+      "actor_wishlist": [
+        {
+          "name": "Wishlist C (TBC)",
+          "headshot_url": "",
+          "credits_note": ""
+        }
+      ],
+      "audition_or_reel_url": ""
+    },
+    {
+      "character_name": "Vincent",
+      "age_range": "45 to 55",
+      "archetype": "The best friend on FaceTime",
+      "character_bio": "Turns up with wine and a takeaway the night Sadie is on the news. Her confidant throughout, on a glitchy connection, clocking every regular who interrupts the call.",
+      "casting_notes": "Comic timing over a bad signal. A warm, quick presence who can land a line like 'Toxic by Britney Spears was written about a vet'.",
+      "actor_wishlist": [
+        {
+          "name": "Wishlist D (TBC)",
+          "headshot_url": "",
+          "credits_note": ""
+        }
+      ],
+      "audition_or_reel_url": ""
+    },
+    {
+      "character_name": "Gordie",
+      "age_range": "16",
+      "archetype": "The shy local boy",
+      "character_bio": "Helps out on the farm, catches Zoe's eye, and is coming to terms with being gay in a small community. Handles the Zoe situation badly.",
+      "casting_notes": "Quiet, watchful, local. Inspired by Douglas Stuart's Young Mungo.",
+      "actor_wishlist": [
+        {
+          "name": "Wishlist E (TBC)",
+          "headshot_url": "",
+          "credits_note": ""
+        }
+      ],
+      "audition_or_reel_url": ""
+    },
+    {
+      "character_name": "Morag and Charlotte",
+      "age_range": "45 to 60",
+      "archetype": "The pub landladies",
+      "character_bio": "Morag is acerbic and becomes Sadie's closest friend in town. Her wife Charlotte is a trans woman most folk round here still call Trevor. The pub's fortunes end up tied to the farm's.",
+      "casting_notes": "Charlotte to be played by a trans actor. Morag needs a line in withering affection.",
+      "actor_wishlist": [
+        {
+          "name": "Wishlist F (TBC)",
+          "headshot_url": "",
+          "credits_note": ""
+        }
+      ],
+      "audition_or_reel_url": ""
+    },
+    {
+      "character_name": "Kate and Ruaridh McGregor",
+      "age_range": "40 to 50",
+      "archetype": "The smug neighbours",
+      "character_bio": "Thriving organic business, top of the range 4x4, a welcome basket with an undercurrent. They wanted the farm before Sadie bought it and plan a care home on the site.",
+      "casting_notes": "Friendly on the surface, Machiavellian underneath. Their teenage son is just selfish enough to exploit Zoe.",
+      "actor_wishlist": [
+        {
+          "name": "Wishlist G (TBC)",
+          "headshot_url": "",
+          "credits_note": ""
+        }
+      ],
+      "audition_or_reel_url": ""
+    }
+  ],
+  "production": {
+    "locations": [
+      {
+        "name": "Sonsie Farm",
+        "region": "Remote west coast of Scotland",
+        "visual_rationale": "A farmhouse that might have been beautiful once: tarpaulin on the roof, a rusting tractor, a wood burning stove and, praise the lord, WiFi. The whole show lives here.",
+        "image_url": "demo/sadie/barn.jpg"
+      },
+      {
+        "name": "The harbour town",
+        "region": "Scottish coast",
+        "visual_rationale": "A small fishing harbour with a pub and a few shops. Where the town stares, and where Callum picks the most remote bench.",
+        "image_url": ""
+      },
+      {
+        "name": "Glasgow",
+        "region": "Secondary school and Sadie's flat",
+        "visual_rationale": "The life she leaves: a library, a corridor, a knife fight, a kitchen with a children's book on the worktop.",
+        "image_url": ""
+      },
+      {
+        "name": "The McGregor farm",
+        "region": "Next door",
+        "visual_rationale": "Wealth, comfort and a lavish games room. The kind of farming Zoe could get used to.",
+        "image_url": ""
+      }
+    ],
+    "financials": {
+      "indicative_budget_band": "",
+      "uk_tax_relief_eligible": true,
+      "tax_relief_notes": "Eligible as high-end TV under AVEC (34% gross, c.25.5% net) if the budget exceeds £1M per broadcast hour. Budget to be confirmed.",
+      "co_pro_opportunities": [
+        "Screen Scotland",
+        "BBC Scotland co-commission"
+      ],
+      "existing_attachments_or_funding": "Created by Rob Fraser and Dawn Steele. Dawn Steele attached to play Sadie. Real-life farming consultants Harry and Will of LAM Farm advising."
+    }
+  },
+  "episodic_arc": [
+    {
+      "episode_number": 1,
+      "title": "Sonsie Farm",
+      "hook": "A knife fight in a Glasgow school sends Sadie to the farm from the book she was named after.",
+      "synopsis": "After the incident, and a night of wine with Vincent, Sadie and Zoe arrive at a farmhouse with a hole in the roof and a sheep in the bedroom. Hamish is unimpressed, the McGregors bring a basket, and the ridiculously handsome vet coaxes a ewe through a bad labour. Sadie refuses to let the weak lamb die and names him Dwayne The Rock Johnson. Then Hamish lets slip that she bought the place."
+    },
+    {
+      "episode_number": 2,
+      "title": "The Auction",
+      "hook": "The only single woman at the livestock auction comes home with an alpaca.",
+      "synopsis": "Sadie asks Zoe for a few months. Callum asks Sadie for a coffee and tells her why the town stares. Sadie buys Deidre the alpaca on impulse and learns she needs a mate."
+    },
+    {
+      "episode_number": 3,
+      "title": "Downward Dog",
+      "hook": "A disastrous yoga retreat finds the farm's first real customer.",
+      "synopsis": "Yoga, glamping and a mobile sauna. One visitor is a fashion designer who wants the wool. Sadie and Morag become friends. Zoe falls for Gordie and is rejected, and the McGregors' son is waiting."
+    },
+    {
+      "episode_number": 4,
+      "title": "Gilbert",
+      "hook": "Sadie fixes the tractor and Hamish tells an old man in a care home about it.",
+      "synopsis": "The YouTube tutorials pay off. We learn the man Hamish visits is Gilbert, who owned the farm until his children sold it out from under him. Sadie commits to quality, authenticity and welfare, and makes Hamish farm manager. Her mother Deidre comes to stay."
+    },
+    {
+      "episode_number": 5,
+      "title": "Malkie",
+      "hook": "A bitten sheep, a bitten daughter, and an old dog who has to be put to sleep.",
+      "synopsis": "Zoe hears the murder rumours and Sadie cancels her first proper date. The investigation into the attack ends at Malkie. Hamish accepts the truth and Sadie sees him comfort the dog through his last moments."
+    },
+    {
+      "episode_number": 6,
+      "title": "Northern Lights",
+      "hook": "Dwayne goes missing in a storm and two kisses leave Sadie with no idea what she wants.",
+      "synopsis": "A cliff-edge rescue, the sky over the farm, and Hamish on what farming means to him. Sadie gives Callum another chance and they kiss; Hamish sees. Collecting the new puppy, Sadie and Hamish kiss too, and he apologises at once. Hamish, Callum or neither? Will Zoe stay? Can the farm survive? We'll find out in series two."
+    }
+  ],
+  "team": [
+    {
+      "name": "Dawn Steele",
+      "role": "Co-creator and lead",
+      "company": "",
+      "bio": "Wanted to create a reflection of a fifty-year-old woman on screen: Scottish, no hair dye, no botox, just her. A lifelong fan of The Archers, inspired by living on a farm for Shetland and by Harry and Will of LAM Farm. Has a teenage daughter of her own.",
+      "notable_credits": [
+        "Shetland (Stella Quinn, series 8)",
+        "Monarch of the Glen",
+        "Holby City",
+        "Wild at Heart"
+      ],
+      "headshot_url": "demo/sadie/sadie-headshot.jpg"
+    },
+    {
+      "name": "Rob Fraser",
+      "role": "Co-creator and writer",
+      "company": "",
+      "bio": "Has written for Dawn Steele for twenty-five years. Initially cynical about a cosy rural show, now sees a distinctive contemporary drama in a rich, ripe area of modern life, with story potential confirmed by real-life farming consultants.",
+      "notable_credits": [],
+      "headshot_url": ""
+    }
+  ],
+  "media": [
+    {
+      "url": "demo/sadie/hero.jpg",
+      "kind": "image",
+      "name": "Hero: storybook and reality",
+      "credit": "",
+      "added_at": "2026-11-02T13:00:00.000Z"
+    },
+    {
+      "url": "demo/sadie/storybook.jpg",
+      "kind": "image",
+      "name": "Storybook Sadie",
+      "credit": "Sizzle frame",
+      "added_at": "2026-11-02T13:00:00.000Z"
+    },
+    {
+      "url": "demo/sadie/sadie-1.jpg",
+      "kind": "image",
+      "name": "Sadie to camera 1",
+      "credit": "Sizzle frame",
+      "added_at": "2026-11-02T13:00:00.000Z"
+    },
+    {
+      "url": "demo/sadie/sadie-2.jpg",
+      "kind": "image",
+      "name": "Sadie to camera 2",
+      "credit": "Sizzle frame",
+      "added_at": "2026-11-02T13:00:00.000Z"
+    },
+    {
+      "url": "demo/sadie/sadie-3.jpg",
+      "kind": "image",
+      "name": "Sadie to camera 3",
+      "credit": "Sizzle frame",
+      "added_at": "2026-11-02T13:00:00.000Z"
+    },
+    {
+      "url": "demo/sadie/sadie-cattle.jpg",
+      "kind": "image",
+      "name": "Sadie with cattle",
+      "credit": "From the pitch document",
+      "added_at": "2026-11-02T13:00:00.000Z"
+    },
+    {
+      "url": "demo/sadie/sadie-headshot.jpg",
+      "kind": "image",
+      "name": "Sadie headshot",
+      "credit": "From the pitch document",
+      "added_at": "2026-11-02T13:00:00.000Z"
+    },
+    {
+      "url": "demo/sadie/field.jpg",
+      "kind": "image",
+      "name": "Field",
+      "credit": "From the pitch document",
+      "added_at": "2026-11-02T13:00:00.000Z"
+    },
+    {
+      "url": "demo/sadie/barn.jpg",
+      "kind": "image",
+      "name": "Barn",
+      "credit": "From the pitch document",
+      "added_at": "2026-11-02T13:00:00.000Z"
+    },
+    {
+      "url": "demo/sadie/sadie-monologue.mp4",
+      "kind": "video",
+      "name": "Sadie monologue (sizzle)",
+      "credit": "",
+      "added_at": "2026-11-02T13:00:00.000Z"
+    }
+  ],
+  "hidden_sections": [],
+  "updated_at": "2026-11-02T13:00:00.000Z"
+}

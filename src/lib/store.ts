@@ -1,6 +1,7 @@
 import { del, list, put } from "@vercel/blob";
 import { PitchDeckSchema, type PitchDeckData } from "@/types/pitch";
 import sample from "../../data/pitches/the-saltings.json";
+import sadie from "../../data/pitches/sadie.json";
 
 // Pitch store. Decks live as JSON in Vercel Blob at pitches/<slug>.json.
 // The bundled demo deck is always on the slate; a Blob copy with the same slug
@@ -10,7 +11,7 @@ import sample from "../../data/pitches/the-saltings.json";
 const PREFIX = "pitches/";
 const hasBlob = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 
-const seeds: PitchDeckData[] = [PitchDeckSchema.parse(sample)];
+const seeds: PitchDeckData[] = [PitchDeckSchema.parse(sample), PitchDeckSchema.parse(sadie)];
 export const DEMO_SLUG = seeds[0].slug;
 
 function merge(fromBlob: PitchDeckData[]): PitchDeckData[] {

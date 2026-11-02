@@ -14,6 +14,9 @@ export default async function proxy(req: NextRequest) {
   if (["/login", "/api/login", "/api/logout"].some((p) => path === p || path.startsWith(`${p}/`))) {
     return NextResponse.next();
   }
+  // Static media in /public (demo stills, bundled video, icons) is not secret;
+  // public deck links need it without a cookie.
+  if (/\.(jpe?g|png|webp|avif|gif|svg|mp4|webm|m4v|ico)$/i.test(path)) return NextResponse.next();
 
   let allowed = false;
   let mode: "viewer" | "studio" = "viewer";
