@@ -6,6 +6,7 @@ import { listPitches } from "@/lib/store";
 import { Media } from "@/components/ui/Media";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { deletePitchAction, duplicatePitchAction } from "./actions";
+import { ConfirmButton } from "@/components/studio/ConfirmButton";
 
 export const metadata = { title: "Studio" };
 
@@ -176,9 +177,9 @@ function PitchCard({ d, canSave }: { d: Awaited<ReturnType<typeof listPitches>>[
           </form>
           <form action={deletePitchAction} className="ml-auto">
             <input type="hidden" name="slug" value={d.slug} />
-            <button className="btn btn-danger py-1.5 text-sm" disabled={!canSave} title="Delete">
+            <ConfirmButton question={`Delete "${d.hero.title || "Untitled"}"${d.status === "published" ? " and its public link" : ""}?`} disabled={!canSave} title="Delete">
               <Trash2 size={14} />
-            </button>
+            </ConfirmButton>
           </form>
         </div>
       </div>

@@ -23,21 +23,35 @@ function merge(fromBlob: PitchDeckData[]): PitchDeckData[] {
   });
 }
 
-async function readBlob(url: string, uploadedAt: Date): Promise<PitchDeckData | null> {
+// A deleted bundled deck leaves a tombstone in Blob so it stays gone.
+const TOMB = "tombstone";
+type Read = PitchDeckData | typeof TOMB | null;
+
+async function readBlob(url: string, uploadedAt: Date): Promise<Read> {
   // The public CDN URL is cached; the uploadedAt stamp busts it after a save.
   const res = await fetch(`${url}?v=${uploadedAt.getTime()}`, { cache: "no-store" });
   if (!res.ok) return null;
-  const parsed = PitchDeckSchema.safeParse(await res.json());
+  const json = (await res.json()) as { tombstone?: boolean };
+  if (json && json.tombstone) return TOMB;
+  const parsed = PitchDeckSchema.safeParse(json);
   return parsed.success ? parsed.data : null;
+}
+
+function merge2(reads: { slug: string; read: Read }[]): PitchDeckData[] {
+  const dead = new Set(reads.filter((r) => r.read === TOMB).map((r) => r.slug));
+  const live = reads.map((r) => r.read).filter((d): d is PitchDeckData => d !== null && d !== TOMB);
+  return merge(live).filter((d) => !dead.has(d.slug));
 }
 
 export async function listPitches(): Promise<PitchDeckData[]> {
   if (!hasBlob()) return merge([]);
   const { blobs } = await list({ prefix: PREFIX, limit: 500 });
-  const decks = (
-    await Promise.all(blobs.filter((b) => b.pathname.endsWith(".json")).map((b) => readBlob(b.url, b.uploadedAt)))
-  ).filter((d): d is PitchDeckData => d !== null);
-  return merge(decks);
+  const reads = await Promise.all(
+    blobs
+      .filter((b) => b.pathname.endsWith(".json"))
+      .map(async (b) => ({ slug: b.pathname.slice(PREFIX.length, -".json".length), read: await readBlob(b.url, b.uploadedAt) })),
+  );
+  return merge2(reads);
 }
 
 export async function getPitch(slug: string): Promise<PitchDeckData | undefined> {
@@ -45,7 +59,9 @@ export async function getPitch(slug: string): Promise<PitchDeckData | undefined>
   const { blobs } = await list({ prefix: `${PREFIX}${slug}.json`, limit: 1 });
   const b = blobs.find((x) => x.pathname === `${PREFIX}${slug}.json`);
   if (!b) return seeds.find((d) => d.slug === slug);
-  return (await readBlob(b.url, b.uploadedAt)) ?? undefined;
+  const read = await readBlob(b.url, b.uploadedAt);
+  if (read === TOMB) return undefined;
+  return read ?? undefined;
 }
 
 export async function savePitch(data: unknown): Promise<PitchDeckData> {
@@ -63,10 +79,21 @@ export async function savePitch(data: unknown): Promise<PitchDeckData> {
 }
 
 // Deleting the demo resets it to the bundled version rather than removing it.
+// Deleting any other bundled deck leaves a tombstone so it does not come back.
 export async function deletePitch(slug: string): Promise<void> {
   if (!hasBlob()) return;
   const { blobs } = await list({ prefix: `${PREFIX}${slug}.json`, limit: 1 });
-  await Promise.all(blobs.map((b) => del(b.url)));
+  await Promise.all(blobs.filter((b) => b.pathname === `${PREFIX}${slug}.json`).map((b) => del(b.url)));
+  const seed = seeds.find((d) => d.slug === slug);
+  if (seed && !seed.is_demo) {
+    await put(`${PREFIX}${slug}.json`, JSON.stringify({ tombstone: true, slug }), {
+      access: "public",
+      contentType: "application/json",
+      addRandomSuffix: false,
+      allowOverwrite: true,
+      cacheControlMaxAge: 60,
+    });
+  }
 }
 
 export function newPitchSkeleton(title: string, slug: string): PitchDeckData {
