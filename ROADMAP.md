@@ -102,3 +102,9 @@ Done: the `pitchgen` project's Deployment Protection is off for production (the 
 - Animation and children's TV: **39% gross, about 29.25% net**.
 - UK Independent Film Tax Credit: **53% gross, about 39.75% net**, films with core costs up to £15M.
 - Model names in the blueprint (Claude 3.7 Sonnet, Gemini 2.5) are out of date; pick current models at Phase 2.
+
+## 2 Nov 2026
+- Sadie lookbook shipped as a bundled deck (`data/pitches/sadie.json`, slug `sadie-lookbook`), public link, stills and 540p monologue in `public/demo/sadie/`.
+- Fix: static media in /public no longer sits behind the login, so public links render their images.
+- New: `GET/PUT /api/pitches/<slug>` admin JSON endpoint for scripts and the extension.
+- Note: a draft with slug `sadie` appears to exist in the Studio slate; delete it there if it was a failed upload.
